@@ -28,3 +28,17 @@ p {
 .logincontainer{
   background-image: url("https://www.whirlpool.com/is/image/content/dam/business-unit/whirlpool/en-us/marketing-content/site-assets/page-content/refrigerator-sclp/Images/featuresassets/French_Doors_WRF992FIFM_Full.png?fit=constrain&fmt=jpg&utc=2018-08-23T21:29:06Z&wid=1246");
 }
+
+.signup{
+  padding-top: 80px;
+  padding-left: 500px;
+  padding-bottom: 100px;
+  background-image: url("https://img1.mashed.com/img/uploads/2017/07/vegetables.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.top{
+  font-size: 100px;
+  color: white;
+}
