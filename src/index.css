@@ -1,3 +1,4 @@
+
 * {
   box-sizing: border-box;
 }
@@ -15,6 +16,17 @@ div[data-reactroot] {
 
 h1 {
   margin-top: 20px;
+  text-align: center;
+  font-size: 80px;
+}
+
+p {
+  text-align: center;
+  font-size: 20px;
+}
+
+.logincontainer{
+  background-image: url("https://www.whirlpool.com/is/image/content/dam/business-unit/whirlpool/en-us/marketing-content/site-assets/page-content/refrigerator-sclp/Images/featuresassets/French_Doors_WRF992FIFM_Full.png?fit=constrain&fmt=jpg&utc=2018-08-23T21:29:06Z&wid=1246");
 }
 
 .signup{
