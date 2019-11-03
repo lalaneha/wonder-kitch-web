@@ -26,10 +26,12 @@ p {
 }
 
 .logincontainer{
-  background-image: url("https://www.whirlpool.com/is/image/content/dam/business-unit/whirlpool/en-us/marketing-content/site-assets/page-content/refrigerator-sclp/Images/featuresassets/French_Doors_WRF992FIFM_Full.png?fit=constrain&fmt=jpg&utc=2018-08-23T21:29:06Z&wid=1246");
+  background-image: url("https://c8.alamy.com/comp/X183AF/open-fridge-full-of-fresh-fruits-and-vegetables-healthy-food-background-organic-nutrition-health-care-dieting-concept-X183AF.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.signup{
+.signups{
   padding-top: 80px;
   padding-left: 500px;
   padding-bottom: 100px;

@@ -5,9 +5,9 @@ import "./style.css";
 function Loginform() {
 return (
     //anything added has to be after retrun
-<MDBContainer>
+<MDBContainer className="frontbox">
       <MDBRow>
-        <MDBCol md="6">
+        <MDBCol md="8">
           <MDBCard>
             <MDBCardBody>
               <MDBCardHeader className="form-header deep-blue-gradient rounded">
@@ -35,7 +35,7 @@ return (
                   />
                 </div>
 
-              <div className="text-center mt-4">
+              <div className="loginbbtn text-center mt-4">
                 <MDBBtn
                   color="light-blue"
                   className="mb-3"
@@ -47,7 +47,7 @@ return (
               </form>
               <MDBModalFooter>
                 <div className="signup font-weight-light">
-                <MDBBtn
+                <MDBBtn href= "/signup"
                   color="light-blue"
                   className="mb-3"
                   type="submit"
