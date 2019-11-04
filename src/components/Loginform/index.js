@@ -8,11 +8,11 @@ return (
 <MDBContainer className="frontbox">
       <MDBRow>
         <MDBCol md="8">
-          <MDBCard>
+          <MDBCard className="logincc">
             <MDBCardBody>
               <MDBCardHeader className="form-header deep-blue-gradient rounded">
                 <h3 className="my-3">
-                  <MDBIcon icon="lock" /> Login:
+                  <MDBIcon icon="lock" /> Please login to continue
                 </h3>
               </MDBCardHeader>
               <form>
@@ -25,7 +25,7 @@ return (
                     validate
                     error="wrong"
                     success="right"
-                  />
+                  /> 
                   <MDBInput
                     label="Type your password"
                     icon="lock"
@@ -36,7 +36,7 @@ return (
                 </div>
 
               <div className="loginbbtn text-center mt-4">
-                <MDBBtn
+                <MDBBtn href= "/home"
                   color="light-blue"
                   className="mb-3"
                   type="submit"
@@ -48,11 +48,11 @@ return (
               <MDBModalFooter>
                 <div className="signup font-weight-light">
                 <MDBBtn href= "/signup"
-                  color="light-blue"
+                  color="grey"
                   className="mb-3"
                   type="submit"
                 >
-                  Not a member? Sign up!
+                  Not a member? Click here to Sign up!
                 </MDBBtn>
                   
                 </div>

@@ -39,7 +39,7 @@ class Search extends Component {
     return (
       <div>
         <Container style={{ minHeight: "80%" }}>
-          <h1 className="text-center">Search For Recipes!</h1>
+          <h2 className="text-center">Search For Recipes with key ingredients!</h2>
           <Alert
             type="danger"
             style={{ opacity: this.state.error ? 1 : 0, marginBottom: 10 }}
