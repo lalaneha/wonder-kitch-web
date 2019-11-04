@@ -52,7 +52,7 @@ class Inventory extends Component {
   render() {
     return (
       <div>
-        <h1 className="text-center">Let’s take a look at what you currently have in your fridge</h1>
+        <h2 className="text-center">Let’s take a look at what you currently have in your fridge</h2>
         {/* <Card image={this.state.image} handleBtnClick={this.handleBtnClick} />
         <h1 className="text-center">
           Made friends with {this.state.matchCount} pups so far!

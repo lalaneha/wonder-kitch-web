@@ -1,13 +1,17 @@
 .signup {
-    background-color: #A1D5A9;
+    background-color: rgba(249, 249, 253, 0.75);
     font-size: 40px;
 }
 
 .loginbbtn {
-    background-color: rgb(245, 245, 245);
     font-size: 40px;
 }
 
 .frontbox{
-    padding-left: 350px;
+    padding-left: 300px;
+}
+
+.logincc{
+    background: rgba(249, 249, 253, 0.75);
+    text-align: center;
 }

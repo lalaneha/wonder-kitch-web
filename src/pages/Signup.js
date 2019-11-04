@@ -4,46 +4,45 @@ import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 const FormPage = () => {
   return (
     <div className="signups">  
-    <MDBContainer>
+    <MDBContainer className="signupcc">
       <MDBRow>
-        <MDBCol md="6">
+        <MDBCol>
           <form>
             <p className="top text-center mb-4">Sign up</p>
             <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
-              Your name
             </label>
             <input
               type="text"
+              placeholder="Name"
               id="defaultFormRegisterNameEx"
               className="form-control"
             />
             <br />
             <label htmlFor="defaultFormRegisterEmailEx" className="grey-text">
-              Your email (this will also be your Username)
             </label>
             <input
               type="email"
+              placeholder="Email (this will also be your Username)"
               id="defaultFormRegisterEmailEx"
               className="form-control"
             />
              <br />
             <label
-              htmlFor="defaultFormRegisterPasswordEx"
-              className="grey-text"
-            >
-              Your password
+              htmlFor="defaultFormRegisterPasswordEx" className="grey-text">
+
             </label>
             <input
               type="password"
+              placeholder="Password"
               id="defaultFormRegisterPasswordEx"
               className="form-control"
             />
             <br />
             <label htmlFor="defaultFormRegisterServingEx" className="grey-text">
-              Serving Size (1 member of your family is 1 serving size)
             </label>
             <input
               type="text"
+              placeholder="Serving Size (1 member of your family is 1 serving size)"
               id="defaultFormRegisterServingEx"
               className="form-control"
             />
