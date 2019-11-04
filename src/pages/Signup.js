@@ -1,50 +1,92 @@
-import React from "react";
+import React, { Component }  from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 
-const FormPage = () => {
+class FormPage extends Component {
+  // Setting the component's initial state
+  state = {
+    user: "",
+    email: "",
+    password: "",
+    servingSize: ""
+  };
+
+  handleInputChange = event => {
+    // Getting the value and name of the input which triggered the change
+    const { name, value } = event.target;
+
+    // Updating the input's state
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleFormSubmit = event => {
+    // Preventing the default behavior of the form submit (which is to refresh the page)
+    event.preventDefault();
+   
+    this.setState({
+      user: "",
+      email: "",
+      password: "",
+      servingSize: ""
+    });
+  };
+
+  render() {
   return (
     <div className="signups">  
-    <MDBContainer>
+    <MDBContainer className="signupcc">
       <MDBRow>
-        <MDBCol md="6">
+        <MDBCol>
           <form>
             <p className="top text-center mb-4">Sign up</p>
             <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
-              Your name
             </label>
             <input
               type="text"
-              id="defaultFormRegisterNameEx"
+              onChange={this.handleInputChange}
+              value={this.state.user}
+              placeholder="Name"
+              id="user"
+              name="user"
               className="form-control"
             />
             <br />
             <label htmlFor="defaultFormRegisterEmailEx" className="grey-text">
-              Your email (this will also be your Username)
             </label>
             <input
               type="email"
-              id="defaultFormRegisterEmailEx"
+              onChange={this.handleInputChange}
+              value={this.state.email}
+              placeholder="Email (this will also be your Username)"
+              id="email"
+              name="email"
               className="form-control"
             />
              <br />
             <label
-              htmlFor="defaultFormRegisterPasswordEx"
-              className="grey-text"
-            >
-              Your password
+              htmlFor="defaultFormRegisterPasswordEx" className="grey-text">
+
             </label>
             <input
               type="password"
-              id="defaultFormRegisterPasswordEx"
+              onChange={this.handleInputChange}
+              value={this.state.password}
+              placeholder="Password"
+              id="password"
+              name="password"
               className="form-control"
             />
             <br />
             <label htmlFor="defaultFormRegisterServingEx" className="grey-text">
-              Serving Size (1 member of your family is 1 serving size)
             </label>
             <input
               type="text"
-              id="defaultFormRegisterServingEx"
+              onChange={this.handleInputChange}
+              value={this.state.servingSize}
+              placeholder="Serving Size (1 member of your family is 1 serving size)"
+              id="servingSize"
+              name="servingSize"
               className="form-control"
             />
             <div className="text-center mt-4">
@@ -58,6 +100,7 @@ const FormPage = () => {
     </MDBContainer>
     </div>
   );
+  }
 };
 
 export default FormPage;

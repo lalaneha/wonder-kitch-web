@@ -1,68 +1,89 @@
-import React, { Component } from "react";
-import API from "../utils/API";
-// import Card from "../components/Card";
-// import Alert from "../components/Alert";
+//installed and used axios for submit function
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import FridgeItem from "../components/FridgeItem";
+let id = 2
+const data = [{name:'Milk', id:'1', qty:1}, {name:'MilkDuds', id:'2', qty:1}]
+function Inventory() {
+const [file, setFile] = useState(undefined);
+const [inventory, setInventory] = useState({});
+const [newItemText, setnewItemText] = useState('');
+const createMap = data => data.reduce((map, item)=>{
+  map[item.name]   = item;
+  return map
+}, {});
 
-class Inventory extends Component {
-  state = {
-    image: "",
-    match: false,
-    matchCount: 0
-  };
-
-  // When the component mounts, load the next dog to be displayed
-  componentDidMount() {
-    this.loadNextDog();
-  }
-
-  handleBtnClick = event => {
-    // Get the data-value of the clicked button
-    const btnType = event.target.attributes.getNamedItem("data-value").value;
-    // Clone this.state to the newState object
-    // We'll modify this object and use it to set our component's state
-    const newState = { ...this.state };
-
-    if (btnType === "pick") {
-      // Set newState.match to either true or false depending on whether or not the dog likes us (1/5 chance)
-      newState.match = 1 === Math.floor(Math.random() * 5) + 1;
-
-      // Set newState.matchCount equal to its current value or its current value + 1 depending on whether the dog likes us
-      newState.matchCount = newState.match
-        ? newState.matchCount + 1
-        : newState.matchCount;
-    } else {
-      // If we thumbs down'ed the dog, we haven't matched with it
-      newState.match = false;
-    }
-    // Replace our component's state with newState, load the next dog image
-    this.setState(newState);
-    this.loadNextDog();
-  };
-
-  loadNextDog = () => {
-    API.getRandomDog()
-      .then(res =>
-        this.setState({
-          image: res.data.message
-        })
-      )
-      .catch(err => console.log(err));
-  };
-
-  render() {
-    return (
-      <div>
-        <h1 className="text-center">Let’s take a look at what you currently have in your fridge</h1>
-        {/* <Card image={this.state.image} handleBtnClick={this.handleBtnClick} />
-        <h1 className="text-center">
-          Made friends with {this.state.matchCount} pups so far!
-        </h1>
-        <Alert style={{ opacity: this.state.match ? 1 : 0 }} type="success">
-          Yay! That Pup Liked You Too!!!
-        </Alert> */}
-      </div>
-    );
+const onSubmit = () => {
+  if(file){
+  const data = new FormData() 
+    data.append('file', file)
+    axios.post ("/fileProcess", data)
+    //sucessful date we got back 
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    }) 
   }
 }
 
+const onChangeHandler = evt => {
+  setFile(evt.target.files[0]);
+
+}
+
+//each time we add something need to figure out if we already have it and be able to increment 
+//each item needs to be saved in db, 
+const addItem = () => {
+  if(newItemText.length > 0){
+    const newInventory = {...inventory};
+    const item = newInventory[newItemText];
+    if(item) {
+      const newItem = {...item, qty: item.qty + 1};
+      newInventory[newItemText] = newItem;
+      setInventory(newInventory);
+    }
+    else {
+      id++;
+      //WE woudl make a DB req normally
+      setInventory(Object.assign(newInventory, {[newItemText]: {name: newItemText,
+      id, gty:1}}));
+    }
+  }
+}
+
+useEffect(()=> {
+  console.log('USE EFFECT ALLED')
+  setInventory(createMap(data));
+}, [data]);
+
+const itemChangeHandler = evt => {
+  setnewItemText(evt.target.value);
+}
+  console.log(inventory);
+  const currentInventory = Object.keys(inventory); 
+  return currentInventory.length > 0 ?
+   (
+    <div>
+    <div className="item-container">
+      {currentInventory.map(key => {
+        const item = inventory[key];
+        return <FridgeItem key={item.id} item={item} />;
+      })}
+    </div>
+    <p>Lets take a look at what you have in your fridge</p>
+    <input type="file" name="file" onChange={onChangeHandler}/>
+    <button onClick={onSubmit}>Submit</button>
+    <input type="text" value={newItemText} name="newItemText" onChange={itemChangeHandler}/>
+    <button onClick={addItem}>Add Item</button>
+    </div>
+  ) : 
+  (
+    <div>Loading ......</div>
+  )
+}
+
 export default Inventory;
+//create input to accept file, 
+
