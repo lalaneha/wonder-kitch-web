@@ -8,3 +8,6 @@ const Teampage = () => {
   };
   
   export default Teampage;
+
+//add form and images of team members
+
