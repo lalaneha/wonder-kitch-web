@@ -1,7 +1,38 @@
-import React from "react";
+import React, { Component }  from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 
-const FormPage = () => {
+class FormPage extends Component {
+  // Setting the component's initial state
+  state = {
+    user: "",
+    email: "",
+    password: "",
+    servingSize: ""
+  };
+
+  handleInputChange = event => {
+    // Getting the value and name of the input which triggered the change
+    const { name, value } = event.target;
+
+    // Updating the input's state
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleFormSubmit = event => {
+    // Preventing the default behavior of the form submit (which is to refresh the page)
+    event.preventDefault();
+   
+    this.setState({
+      user: "",
+      email: "",
+      password: "",
+      servingSize: ""
+    });
+  };
+
+  render() {
   return (
     <div className="signups">  
     <MDBContainer className="signupcc">
@@ -13,8 +44,11 @@ const FormPage = () => {
             </label>
             <input
               type="text"
+              onChange={this.handleInputChange}
+              value={this.state.user}
               placeholder="Name"
-              id="defaultFormRegisterNameEx"
+              id="user"
+              name="user"
               className="form-control"
             />
             <br />
@@ -22,8 +56,11 @@ const FormPage = () => {
             </label>
             <input
               type="email"
+              onChange={this.handleInputChange}
+              value={this.state.email}
               placeholder="Email (this will also be your Username)"
-              id="defaultFormRegisterEmailEx"
+              id="email"
+              name="email"
               className="form-control"
             />
              <br />
@@ -33,8 +70,11 @@ const FormPage = () => {
             </label>
             <input
               type="password"
+              onChange={this.handleInputChange}
+              value={this.state.password}
               placeholder="Password"
-              id="defaultFormRegisterPasswordEx"
+              id="password"
+              name="password"
               className="form-control"
             />
             <br />
@@ -42,8 +82,11 @@ const FormPage = () => {
             </label>
             <input
               type="text"
+              onChange={this.handleInputChange}
+              value={this.state.servingSize}
               placeholder="Serving Size (1 member of your family is 1 serving size)"
-              id="defaultFormRegisterServingEx"
+              id="servingSize"
+              name="servingSize"
               className="form-control"
             />
             <div className="text-center mt-4">
@@ -57,6 +100,7 @@ const FormPage = () => {
     </MDBContainer>
     </div>
   );
+  }
 };
 
 export default FormPage;

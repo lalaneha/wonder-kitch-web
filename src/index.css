@@ -84,3 +84,21 @@ p {
 .text-center{
   margin-top: 50px;
 }
+
+.signup {
+  background-color: rgba(249, 249, 253, 0.75);
+  font-size: 40px;
+}
+
+.loginbbtn {
+  font-size: 40px;
+}
+
+.frontbox{
+  padding-left: 300px;
+}
+
+.logincc{
+  background: rgba(249, 249, 253, 0.75);
+  text-align: center;
+}
