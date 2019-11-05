@@ -2,7 +2,7 @@
 //calling all pages 
 import React from "react";
 import { BrowserRouter as Router, Route, Redirect} from "react-router-dom";
-import Inventory from "./pages/Inventory";
+import Inventory2 from "./pages/Inventory2";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Teampage from "./pages/Teampage";
@@ -55,7 +55,7 @@ function App() {
             <Home />
           </PrivateRoute>
           <PrivateRoute exact path="/inventory">
-            <Inventory />
+            <Inventory2 />
           </PrivateRoute>
           <PrivateRoute exact path="/search">
             <Search />
