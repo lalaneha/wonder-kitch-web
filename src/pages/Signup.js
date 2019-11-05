@@ -30,7 +30,7 @@ class FormPage extends Component {
         throw new Error(res.data.message);
       }
       console.log(res)
-      this.props.history.push("/login");
+      this.props.history.push("/home");
     })
     .catch(err => this.setState({ error: err.message }));
 
