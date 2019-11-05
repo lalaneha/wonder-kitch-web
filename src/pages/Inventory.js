@@ -4,7 +4,6 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import FridgeItem from "../components/FridgeItem";
 let id = 2
-//changing qty to reflect quanity 
 const data = [{name:'Milk', id:'1', quanity:1}, {name:'MilkDuds', id:'2', quanity:1}]
 function Inventory() {
 const [file, setFile] = useState(undefined);
