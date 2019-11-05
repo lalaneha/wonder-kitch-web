@@ -15,8 +15,21 @@ const createMap = data => data.reduce((map, item)=>{
 }, {});
 
 const onSubmit = () => {
-
-  axios.post("http://localhost:3001/takePicture" + this.inventory.file)
+  if(file){
+    console.log(file);
+    // const formData = {
+    //   ipAddress: '0.0.0.0',
+    //   file: {
+    //     value: fs.createReadStream(dest),
+    //     options: {
+    //       filename: message.file.name,
+    //       contentType: message.file.mimetype
+    //     }
+    //   }
+    // };
+    const data = new FormData() 
+    data.append('file', file)
+  axios.post("/takePicture", data)
   .then(res => {
     if (res.status === "error") {
       throw new Error(res.data.message);
@@ -26,19 +39,15 @@ const onSubmit = () => {
     // this.setState({ results: res.data.message, error: "" });
   })
   .catch(err => this.setState({ error: err.message }));
-
-  if(file){
-  const data = new FormData() 
-    data.append('file', file)
-    axios.post ("/fileProcess", data)
-    //sucessful data we got back 
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => {
-      console.log(err);
-    }) 
   }
+    // axios.post ("/fileProcess", data)
+    // //sucessful data we got back 
+    // .then(res => {
+    //   console.log(res);
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    // }) 
 }
 
 const onChangeHandler = evt => {
