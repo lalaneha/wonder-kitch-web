@@ -2,7 +2,7 @@
 //calling all pages 
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Inventory from "./pages/Inventory";
+import Inventory from "./pages/Inventory2";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Teampage from "./pages/Teampage";

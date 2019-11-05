@@ -5,12 +5,16 @@ import Alert from "../components/Alert";
 import axios from 'axios';
 import { Input, FormBtn } from "../components/Form";
 import { List, ListItem } from "../components/List";
+import Col from "../components/Col";
+import Row from "../components/Row";
 
 class Search extends Component {
   state = {
     search: "",
     results: [],
-    error: ""
+    error: "",
+    q:"",
+    Answer:""
   };
 
   // When the component mounts, get a list of all available base breeds and update this.state.breeds
@@ -38,6 +42,26 @@ class Search extends Component {
       })
       .catch(err => this.setState({ error: err.message }));
   };
+
+  handleFormView = (id) => {
+    console.log("this is id "+id)
+  };
+
+  handleQuestionSubmit = event => {
+    event.preventDefault();  
+    axios.get("http://localhost:3001/recipeQuestion/" +this.state.q)
+    .then(res => {
+      if (res.status === "error") {
+        throw new Error(res.data.message);
+      }
+      console.log(res)
+      this.setState({Answer:res.data.answer})
+      // this.setState({ results: res.data.message, error: "" });
+    })
+    .catch(err => this.setState({ error: err.message }));
+  };
+
+
   render() {
     return (
       <div>
@@ -49,6 +73,26 @@ class Search extends Component {
           >
             {this.state.error}
           </Alert>
+<Row>
+    <Col size="md-4">
+    <Input
+                value={this.state.q}
+                onChange={this.handleInputChange}
+                name="q"
+                placeholder="Any nutrition related question!"
+              />
+              <FormBtn
+                onClick={this.handleQuestionSubmit}
+              >
+                Get Answer
+              </FormBtn>
+              <strong>
+                {this.state.Answer}
+              </strong>
+</Col>
+</Row>
+<Row>
+<Col size="md-12">
           <Input
                 value={this.state.search}
                 onChange={this.handleInputChange}
@@ -71,6 +115,15 @@ class Search extends Component {
                       <strong>
                         {result.title}
                       </strong>
+                      <p>
+                      readyInMinutes:{result.readyInMinutes}
+                      </p>
+                      <button
+                      data-id={result.id}
+                      onClick={this.handleFormView("data-id")}
+                      >
+                      View Info
+                      </button>
                     
                   </ListItem>
                 ))}
@@ -79,6 +132,8 @@ class Search extends Component {
               <h3>No Results to Display</h3>
             )}
     </div>
+    </Col>
+    </Row>
         </Container>
       </div>
     );
