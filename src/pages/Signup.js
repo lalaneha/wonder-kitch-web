@@ -1,5 +1,6 @@
 import React, { Component }  from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import axios from "axios";
 
 class FormPage extends Component {
   // Setting the component's initial state
@@ -23,7 +24,17 @@ class FormPage extends Component {
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
-   
+    axios.post("http://localhost:3000/login", {username: this.state.user, email: this.state.email,  password: this.state.password, passwordConf: this.state.password})
+    .then(res => {
+      if (res.status === "error") {
+        throw new Error(res.data.message);
+      }
+      console.log(res)
+      this.props.history.push("/login");
+    })
+    .catch(err => this.setState({ error: err.message }));
+
+    
     this.setState({
       user: "",
       email: "",
@@ -90,7 +101,7 @@ class FormPage extends Component {
               className="form-control"
             />
             <div className="text-center mt-4">
-              <MDBBtn color="unique" type="submit">
+              <MDBBtn color="unique" type="submit" onClick={this.handleFormSubmit}>
                 Register
               </MDBBtn>
             </div>
