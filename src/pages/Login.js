@@ -2,12 +2,15 @@ import React, {Component} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBModalFooter, MDBIcon, MDBCardHeader, MDBBtn, MDBInput} from "mdbreact";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'
+import axios from "axios";
+import fakeAuth from '../utils/fakeAuth';
 
 class Login extends Component {
   // Setting the component's initial state
   state = {
-    user: "",
-    email: "",
+    loguser: "",
+    logemail: "",
+    isAuthenticated: false
   };
 
   handleInputChange = event => {
@@ -23,7 +26,19 @@ class Login extends Component {
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
-   
+    console.log("test")
+
+    axios.post("http://localhost:3000/login", {logemail: this.state.logemail,  logpassword: this.state.logpassword})
+      .then(res => {
+        if (res.status === "error") {
+          throw new Error(res.data.message);
+        }
+        // Tell the UI we've authenticated.
+        fakeAuth.isAuthenticated = true;
+        // React redirect to /home route.
+        this.props.history.push("/home");
+      })
+      .catch(err => this.setState({ error: err.message }));
     this.setState({
       user: "",
       email: "",
@@ -61,7 +76,7 @@ class Login extends Component {
                     group
                     id="user"
                     type="email"
-                    name="user"
+                    name="logemail"
                     validate
                     error="wrong"
                     success="right"
@@ -74,16 +89,17 @@ class Login extends Component {
                     group
                     id="password"
                     type="password"
-                    name="passowrd"
+                    name="logpassword"
                     validate
                   />
                 </div>
 
               <div className="loginbbtn text-center mt-4">
-                <MDBBtn href= "/home"
+                <MDBBtn 
                   color="light-blue"
                   className="mb-3"
                   type="submit"
+                  onClick={this.handleFormSubmit}
                 >
                   Login
                 </MDBBtn>
@@ -95,6 +111,7 @@ class Login extends Component {
                   color="grey"
                   className="mb-3"
                   type="submit"
+                  
                 >
                   Not a member? Click here to Sign up!
                 </MDBBtn>
