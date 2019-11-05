@@ -1,7 +1,7 @@
 
 //calling all pages 
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 import Inventory from "./pages/Inventory";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -11,6 +11,31 @@ import Search from "./pages/Search";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Wrapper from "./components/Wrapper";
+import fakeAuth from "./utils/fakeAuth";
+
+
+
+
+function PrivateRoute({ children, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        fakeAuth.isAuthenticated ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
 
 function App() {
   return (
@@ -18,12 +43,23 @@ function App() {
       <div>
       <Navbar />
         <Wrapper>
-          <Route exact path="/" component={Login} />
+          <Route exact path="/">
+            <Redirect to = {{pathname:"/login"}} />
+          </Route>
+          <Route exact path = "/login" component = {Login}/>
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/teampage" component={Teampage} />
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/inventory" component={Inventory} />
-          <Route exact path="/search" component={Search} />
+          <PrivateRoute exact path="/teampage">
+            <Teampage />
+          </PrivateRoute>
+          <PrivateRoute exact path="/home">
+            <Home />
+          </PrivateRoute>
+          <PrivateRoute exact path="/inventory">
+            <Inventory />
+          </PrivateRoute>
+          <PrivateRoute exact path="/search">
+            <Search />
+          </PrivateRoute>
         </Wrapper>
         <Footer />
       </div>
