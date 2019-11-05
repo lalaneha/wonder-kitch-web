@@ -30,13 +30,14 @@ class Login extends Component {
 
     axios.post("http://localhost:3000/login", {logemail: this.state.logemail,  logpassword: this.state.logpassword})
       .then(res => {
+        console.log("look here", res.data)
         if (res.status === "error") {
           throw new Error(res.data.message);
         }
         // Tell the UI we've authenticated.
         fakeAuth.isAuthenticated = true;
         // React redirect to /home route.
-        this.props.history.push("/home");
+        // this.props.history.push("/home");
       })
       .catch(err => this.setState({ error: err.message }));
     this.setState({
