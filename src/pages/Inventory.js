@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import FridgeItem from "../components/FridgeItem";
 let id = 2
-const data = [{name:'Milk', id:'1', qty:1}, {name:'MilkDuds', id:'2', qty:1}]
+const data = [{name:'Milk', id:'1', quanity:1}, {name:'MilkDuds', id:'2', quanity:1}]
 function Inventory() {
 const [file, setFile] = useState(undefined);
 const [inventory, setInventory] = useState({});
@@ -15,8 +15,21 @@ const createMap = data => data.reduce((map, item)=>{
 }, {});
 
 const onSubmit = () => {
-
-  axios.post("http://localhost:3001/takePicture" + this.inventory.file)
+  if(file){
+    console.log(file);
+    // const formData = {
+    //   ipAddress: '0.0.0.0',
+    //   file: {
+    //     value: fs.createReadStream(dest),
+    //     options: {
+    //       filename: message.file.name,
+    //       contentType: message.file.mimetype
+    //     }
+    //   }
+    // };
+    const data = new FormData() 
+    data.append('file', file)
+  axios.post("/takePicture", data)
   .then(res => {
     if (res.status === "error") {
       throw new Error(res.data.message);
@@ -26,19 +39,15 @@ const onSubmit = () => {
     // this.setState({ results: res.data.message, error: "" });
   })
   .catch(err => this.setState({ error: err.message }));
-
-  if(file){
-  const data = new FormData() 
-    data.append('file', file)
-    axios.post ("/fileProcess", data)
-    //sucessful data we got back 
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => {
-      console.log(err);
-    }) 
   }
+    // axios.post ("/fileProcess", data)
+    // //sucessful data we got back 
+    // .then(res => {
+    //   console.log(res);
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    // }) 
 }
 
 const onChangeHandler = evt => {
@@ -53,7 +62,7 @@ const addItem = () => {
     const newInventory = {...inventory};
     const item = newInventory[newItemText];
     if(item) {
-      const newItem = {...item, qty: item.qty + 1};
+      const newItem = {...item, quanity: item.quanity + 1};
       newInventory[newItemText] = newItem;
       setInventory(newInventory);
     }
