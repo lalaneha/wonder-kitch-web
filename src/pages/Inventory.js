@@ -15,6 +15,18 @@ const createMap = data => data.reduce((map, item)=>{
 }, {});
 
 const onSubmit = () => {
+
+  axios.post("http://localhost:3001/takePicture" + this.inventory.file)
+  .then(res => {
+    if (res.status === "error") {
+      throw new Error(res.data.message);
+    }
+    console.log(res)
+    // this.setState({results:res.data.results})
+    // this.setState({ results: res.data.message, error: "" });
+  })
+  .catch(err => this.setState({ error: err.message }));
+
   if(file){
   const data = new FormData() 
     data.append('file', file)
