@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import FridgeItem from "../components/FridgeItem";
 let id = 2
-const data = [{name:'Milk', id:'1', qty:1}, {name:'MilkDuds', id:'2', qty:1}]
+const data = [{name:'Milk', id:'1', quanity:1}, {name:'MilkDuds', id:'2', quanity:1}]
 function Inventory() {
 const [file, setFile] = useState(undefined);
 const [inventory, setInventory] = useState({});
@@ -53,7 +53,7 @@ const addItem = () => {
     const newInventory = {...inventory};
     const item = newInventory[newItemText];
     if(item) {
-      const newItem = {...item, qty: item.qty + 1};
+      const newItem = {...item, quanity: item.quanity + 1};
       newInventory[newItemText] = newItem;
       setInventory(newInventory);
     }
