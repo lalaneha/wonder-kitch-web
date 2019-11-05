@@ -1,4 +1,5 @@
 //installed and used axios for submit function
+//need to check with alex about naming and linking in with front end 
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import FridgeItem from "../components/FridgeItem";
@@ -18,7 +19,7 @@ const onSubmit = () => {
   const data = new FormData() 
     data.append('file', file)
     axios.post ("/fileProcess", data)
-    //sucessful date we got back 
+    //sucessful data we got back 
     .then(res => {
       console.log(res);
     })
