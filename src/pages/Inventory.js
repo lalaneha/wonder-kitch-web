@@ -1,4 +1,5 @@
 //installed and used axios for submit function
+//need to check with alex about naming and linking in with front end 
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import FridgeItem from "../components/FridgeItem";
@@ -14,6 +15,7 @@ const createMap = data => data.reduce((map, item)=>{
 }, {});
 
 const onSubmit = () => {
+
   axios.post("http://localhost:3001/takePicture" + this.inventory.file)
   .then(res => {
     if (res.status === "error") {
@@ -24,6 +26,19 @@ const onSubmit = () => {
     // this.setState({ results: res.data.message, error: "" });
   })
   .catch(err => this.setState({ error: err.message }));
+
+  if(file){
+  const data = new FormData() 
+    data.append('file', file)
+    axios.post ("/fileProcess", data)
+    //sucessful data we got back 
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    }) 
+  }
 }
 
 const onChangeHandler = evt => {
