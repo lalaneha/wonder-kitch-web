@@ -4,11 +4,11 @@ import Col from "../components/Col";
 import Row from "../components/Row";
 // import SearchResults from "../components/SearchResults";
 import API from "../utils/API";
-import Alert from "../components/Alert";
-import axios from 'axios';
+// import Alert from "../components/Alert";
+// import axios from 'axios';
 import { Input, FormBtn } from "../components/Form";
 import { List, ListItem } from "../components/List";
-import querystring from "querystring";
+// import querystring from "querystring";
 
 class Inventory2 extends Component {
   state = {
