@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import Container from "../components/Container";
 import Col from "../components/Col";
 import Row from "../components/Row";
-// import SearchResults from "../components/SearchResults";
 import API from "../utils/API";
+<<<<<<< HEAD
 // import Alert from "../components/Alert";
 // import axios from 'axios';
 import { Input, FormBtn } from "../components/Form";
 import { List, ListItem } from "../components/List";
 // import querystring from "querystring";
+=======
+import { Input, FormBtn } from "../components/Form";
+import { List, ListItem } from "../components/List";
+>>>>>>> c02e215c967cb5c8a0f4cf924e9959ef604ee5a5
 
 class Inventory2 extends Component {
   state = {
@@ -112,7 +116,7 @@ handlePictureSubmit=event=>{
             )}
     </div>
     </Col>
-    <Col size="md-6">
+    <Col size="md-6" >
     <strong>
     Item:
     </strong>

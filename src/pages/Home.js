@@ -1,15 +1,51 @@
 import React from "react";
-import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card';
+import { Link } from "react-router-dom";
 
 
   function Home() {
     return (
-      <div className="homebutton">
+      <div>
         <h2 className="text-center">What would you like to do</h2>
-      <Button variant="outline-success homebb" href="/inventory">View/Update inventory</Button>
-      <Button variant="outline-success homebbv" href="/search">Search for recipes with key ingredients</Button>
-      <Button variant="outline-success homebbv" href="#">View recipes based on what’s in your fridge</Button>
-      </div>
+        <div className="inv">
+        <Card className="inv2">
+        <Card.Body>
+        <Card.Text>
+        <Link
+              to="/inventory"
+              className={window.location.pathname === "/inventory"}
+            >
+            <p>View/Update Inventory</p>
+          </Link>
+          </Card.Text>
+          </Card.Body>
+          </Card>
+          <Card className="inv2">
+        <Card.Body>
+        <Card.Text>
+            <Link
+              to="/search"
+              className={window.location.pathname === "/search"}
+            >
+              <p>Search Recipes by Name or by Key ingredients</p>
+            </Link>
+            </Card.Text>
+          </Card.Body>
+          </Card>
+          <Card className="inv2">
+        <Card.Body>
+        <Card.Text>
+            <Link
+              to="/#"
+              className={window.location.pathname === "/#"}
+            >
+              <p>View recipes based on what’s in your fridge</p>
+            </Link>
+            </Card.Text>
+          </Card.Body>
+          </Card>
+          </div>
+          </div>
     );
   }
 
