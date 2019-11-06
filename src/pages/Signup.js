@@ -1,6 +1,8 @@
 import React, { Component }  from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import axios from "axios";
+import fakeAuth from '../utils/fakeAuth';
+
 
 class FormPage extends Component {
   // Setting the component's initial state
@@ -29,7 +31,11 @@ class FormPage extends Component {
       if (res.status === "error") {
         throw new Error(res.data.message);
       }
+      console.log("signup")
       console.log(res)
+      // Tell the UI we've authenticated.
+      fakeAuth.isAuthenticated = true;
+      // React redirect to /home route.
       this.props.history.push("/home");
     })
     .catch(err => this.setState({ error: err.message }));

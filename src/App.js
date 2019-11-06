@@ -4,6 +4,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 import Inventory2 from "./pages/Inventory2";
 import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
 import Teampage from "./pages/Teampage";
 import Home from "./pages/Home";
@@ -48,6 +49,7 @@ function App() {
           </Route>
           <Route exact path = "/login" component = {Login}/>
           <Route exact path="/signup" component={Signup} />
+          <Route exact path = "/logout" component = {Logout}/>
           <Route exact path="/teampage">
             <Teampage />
           </Route>
