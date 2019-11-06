@@ -13,7 +13,12 @@ class Search extends Component {
     results: [],
     error: "",
     q:"",
-    Answer:""
+    Answer:"",
+    analyzedInstructions:[],
+    ingredients:[],
+    nutrients:[],
+    ingred:"",
+    nutrent:""
   };
 
   handleInputChange = event => {
@@ -35,9 +40,40 @@ class Search extends Component {
       .catch(err => this.setState({ error: err.message }));
   };
 
-  handleFormView = (id) => {
+  handleFormView = id => {
     console.log("this is id "+id)
+    axios.get("http://localhost:3001/recipeNutrition/" +id)
+    .then(res => {
+      if (res.status === "error") {
+        throw new Error(res.data.message);
+      }
+      console.log(res.data.nutrition.nutrients)
+      let ing="";
+      let nut="";
+      for (let i = 0; i < res.data.nutrition.ingredients.length; i++) {
+        ing = ing + res.data.nutrition.ingredients[i].name+" "+res.data.nutrition.ingredients[i].amount+" "+res.data.nutrition.ingredients[i].unit+", "
+      }
+      for (let j = 0; j < res.data.nutrition.nutrients.length; j++) {
+        nut = nut + res.data.nutrition.nutrients[j].title+" "+res.data.nutrition.nutrients[j].amount+" "+res.data.nutrition.nutrients[j].unit+", "
+      }
+
+      this.setState({ingred:ing})
+      this.setState({nutrent:nut})
+      this.setState({ ingredients: res.data.nutrition.ingredients, error: "" });
+      this.setState({ analyzedInstructions: res.data.analyzedInstructions[0].steps, error: "" });
+      this.setState({ nutrients: res.data.nutrition.nutrients, error: "" });
+    })
+    .catch(err => this.setState({ error: err.message }));
+
   };
+  
+  handleHideInfo = event => {
+    let arr =[];
+    this.setState({analyzedInstructions:arr})
+    this.setState({nutrients:arr})
+    this.setState({ingredients:arr})
+    this.setState({ingred:"", nutrent:""})
+  }
 
   handleQuestionSubmit = event => {
     event.preventDefault();  
@@ -111,11 +147,37 @@ class Search extends Component {
                       readyInMinutes:{result.readyInMinutes}
                       </p>
                       <button
-                      data-id={result.id}
-                      onClick={this.handleFormView("data-id")}
+                      onClick={() => this.handleFormView(result.id)}
                       >
                       View Info
                       </button>
+                      <List>
+                  <ListItem key={"ing"}>
+                      <strong>
+                        {this.state.ingred}
+                      </strong>
+                  </ListItem>
+                {this.state.analyzedInstructions.map(result => (
+                  <ListItem key={result.number}>
+                      <strong>
+                        Step {result.number}: 
+                      </strong>
+                      <p>
+                        {result.step}
+                      </p>
+                  </ListItem>
+                ))}
+                  <ListItem key={"nut"}>
+                      <strong>
+                        {this.state.nutrent}
+                      </strong>
+                  </ListItem>
+                      <button
+                      onClick={this.handleHideInfo}
+                      >
+                      Hide Info
+                      </button>
+              </List>
                     
                   </ListItem>
                 ))}
