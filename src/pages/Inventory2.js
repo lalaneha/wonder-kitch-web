@@ -3,13 +3,9 @@ import Container from "../components/Container";
 import Col from "../components/Col";
 import DeleteBtn from "../components/DeleteBtn";
 import Row from "../components/Row";
-// import SearchResults from "../components/SearchResults";
 import API from "../utils/API";
-import Alert from "../components/Alert";
-import axios from 'axios';
 import { Input, FormBtn } from "../components/Form";
 import { List, ListItem } from "../components/List";
-import querystring from "querystring";
 
 class Inventory2 extends Component {
   constructor(props) {
@@ -199,7 +195,7 @@ handlePictureSubmit=event=>{
             )}
     </div>
     </Col>
-    <Col size="md-6">
+    <Col size="md-6" >
     <strong>
     Item:
     </strong>

@@ -31,12 +31,11 @@ class Login extends Component {
     axios.post("http://localhost:3000/login", {logemail: this.state.logemail,  logpassword: this.state.logpassword})
       .then(res => {
         console.log("look here", res.data)
+        // This tells the UI we've authenticated. See fakeAuth.js
         localStorage.setItem("userID", res.data._id)
         if (res.status === "error") {
           throw new Error(res.data.message);
         }
-        // Tell the UI we've authenticated.
-        fakeAuth.isAuthenticated = true;
         // React redirect to /home route.
         this.props.history.push("/home");
       })
@@ -68,7 +67,7 @@ class Login extends Component {
                   <MDBIcon icon="lock" /> Please login to continue
                 </h3>
               </MDBCardHeader>
-              <form>
+              <form onSubmit={this.handleFormSubmit}>
                 <div className="grey-text">
                   <MDBInput
                     label="Type your email"
@@ -101,7 +100,7 @@ class Login extends Component {
                   color="light-blue"
                   className="mb-3"
                   type="submit"
-                  onClick={this.handleFormSubmit}
+               
                 >
                   Login
                 </MDBBtn>

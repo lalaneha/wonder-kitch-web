@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Container from "../components/Container";
-// import SearchResults from "../components/SearchResults";
 import Alert from "../components/Alert";
 import axios from 'axios';
 import { Input, FormBtn } from "../components/Form";
@@ -21,13 +20,6 @@ class Search extends Component {
     ingred:"",
     nutrent:""
   };
-
-  // When the component mounts, get a list of all available base breeds and update this.state.breeds
-  // componentDidMount() {
-  //   API.getBaseBreedsList()
-  //     .then(res => this.setState({ breeds: res.data.message }))
-  //     .catch(err => console.log(err));
-  // }
 
   handleInputChange = event => {
     const {name ,value} =event.target;
