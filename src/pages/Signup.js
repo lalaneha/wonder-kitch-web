@@ -1,6 +1,8 @@
 import React, { Component }  from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import axios from "axios";
+import fakeAuth from '../utils/fakeAuth';
+
 
 class FormPage extends Component {
   // Setting the component's initial state
@@ -29,8 +31,12 @@ class FormPage extends Component {
       if (res.status === "error") {
         throw new Error(res.data.message);
       }
+      console.log("signup")
       console.log(res)
-      this.props.history.push("/login");
+      // Tell the UI we've authenticated.
+      localStorage.setItem("userID", res.data._id)
+      // React redirect to /home route.
+      this.props.history.push("/home");
     })
     .catch(err => this.setState({ error: err.message }));
 
@@ -49,7 +55,7 @@ class FormPage extends Component {
     <MDBContainer className="signupcc">
       <MDBRow>
         <MDBCol>
-          <form>
+        <form onSubmit={this.handleFormSubmit}>
             <p className="top text-center mb-4">Sign up</p>
             <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
             </label>
@@ -101,7 +107,7 @@ class FormPage extends Component {
               className="form-control"
             />
             <div className="text-center mt-4">
-              <MDBBtn color="unique" type="submit" onClick={this.handleFormSubmit}>
+              <MDBBtn color="unique" type="submit">
                 Register
               </MDBBtn>
             </div>

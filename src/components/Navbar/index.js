@@ -37,8 +37,8 @@ function Navbar() {
           </li>
           <li className="nav-item">
             <Link
-              to="/login"
-              className={window.location.pathname === "/login" ? "nav-link active" : "nav-link"}
+              to="/logout"
+              className={window.location.pathname === "/logout" ? "nav-link active" : "nav-link"}
             >
               LogOut
             </Link>

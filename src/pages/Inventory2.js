@@ -108,7 +108,7 @@ handlePictureSubmit=event=>{
             )}
     </div>
     </Col>
-    <Col size="md-6">
+    <Col size="md-6" >
     <strong>
     Item:
     </strong>
