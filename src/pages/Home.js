@@ -32,18 +32,6 @@ import { Link } from "react-router-dom";
             </Card.Text>
           </Card.Body>
           </Card>
-          <Card className="inv2">
-        <Card.Body>
-        <Card.Text>
-            <Link
-              to="/#"
-              className={window.location.pathname === "/#"}
-            >
-              <p>View recipes based on what’s in your fridge</p>
-            </Link>
-            </Card.Text>
-          </Card.Body>
-          </Card>
           </div>
           </div>
     );
