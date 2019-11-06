@@ -43,12 +43,33 @@ handlePictureChange = event =>{
 }
 
 handleUpdateSubmit = (id,event) =>{
-  console.log("id",id);
-  console.log("event",event.target);
+  axios.post("http://localhost:3001/updateItem",{
+    userID: localStorage.getItem("userID"),
+    itemID: this.state.DBItems[id]._id,
+    name:this.state.DBItems[id].name,
+    quantity:this.state.DBItems[id].quantity
+  }
+)
+.then(res => {
+  if (res.status === "error") {
+    throw new Error(res.data.message);
+  }
+  axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
+  .then(res => {
+    if (res.status === "error") {
+      throw new Error(res.data.message);
+    }
+    console.log(res.data[0].items)
+    this.setState({DBItems:res.data[0].items})
+    let arr =[];
+    this.setState({receiptResults:arr})
+  })
+  .catch(err => this.setState({ error: err.message }));
+})
+.catch(err => this.setState({ error: err.message }));
 }
 
 handleDeleteSubmit = (id,event) =>{
-  console.log("id",id);
   axios.post("http://localhost:3001/deleteItem",{
       userID: localStorage.getItem("userID"),
       itemID: this.state.DBItems[id]._id,
