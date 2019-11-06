@@ -6,6 +6,7 @@ import Row from "../components/Row";
 import API from "../utils/API";
 import { Input, FormBtn } from "../components/Form";
 import { List, ListItem } from "../components/List";
+import axios from "axios";
 
 class Inventory2 extends Component {
   constructor(props) {
