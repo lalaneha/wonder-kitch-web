@@ -3,16 +3,8 @@ import Container from "../components/Container";
 import Col from "../components/Col";
 import Row from "../components/Row";
 import API from "../utils/API";
-<<<<<<< HEAD
-// import Alert from "../components/Alert";
-// import axios from 'axios';
 import { Input, FormBtn } from "../components/Form";
 import { List, ListItem } from "../components/List";
-// import querystring from "querystring";
-=======
-import { Input, FormBtn } from "../components/Form";
-import { List, ListItem } from "../components/List";
->>>>>>> c02e215c967cb5c8a0f4cf924e9959ef604ee5a5
 
 class Inventory2 extends Component {
   state = {
