@@ -19,7 +19,7 @@ class Inventory2 extends Component {
       ReceiptQuantityChange:"",
       ReceiptItemsChange:"",
       DBItems:[] };
-      // this.handleReceiptItemsChange = this.handleReceiptItemsChange.bind(this);
+      this.handleDeleteSubmit = this.handleDeleteSubmit.bind(this);
   }
 
    componentDidMount() {
@@ -42,11 +42,56 @@ handlePictureChange = event =>{
   })
 }
 
-handleUpdateSubmit = id =>{
-  
+handleUpdateSubmit = (id,event) =>{
+  axios.post("http://localhost:3001/updateItem",{
+    userID: localStorage.getItem("userID"),
+    itemID: this.state.DBItems[id]._id,
+    name:this.state.DBItems[id].name,
+    quantity:this.state.DBItems[id].quantity
+  }
+)
+.then(res => {
+  if (res.status === "error") {
+    throw new Error(res.data.message);
+  }
+  axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
+  .then(res => {
+    if (res.status === "error") {
+      throw new Error(res.data.message);
+    }
+    console.log(res.data[0].items)
+    this.setState({DBItems:res.data[0].items})
+    let arr =[];
+    this.setState({receiptResults:arr})
+  })
+  .catch(err => this.setState({ error: err.message }));
+})
+.catch(err => this.setState({ error: err.message }));
 }
-handleDeleteSubmit = id =>{
 
+handleDeleteSubmit = (id,event) =>{
+  axios.post("http://localhost:3001/deleteItem",{
+      userID: localStorage.getItem("userID"),
+      itemID: this.state.DBItems[id]._id,
+    }
+  )
+  .then(res => {
+    if (res.status === "error") {
+      throw new Error(res.data.message);
+    }
+    axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
+    .then(res => {
+      if (res.status === "error") {
+        throw new Error(res.data.message);
+      }
+      console.log(res.data[0].items)
+      this.setState({DBItems:res.data[0].items})
+      let arr =[];
+      this.setState({receiptResults:arr})
+    })
+    .catch(err => this.setState({ error: err.message }));
+  })
+  .catch(err => this.setState({ error: err.message }));
 }
 
 handleAddItemsSubmit = event => {
@@ -86,6 +131,13 @@ handleReceiptItemsChange = (i,event) => {
   let users = [...this.state.receiptResults];
   users[i] = {...users[i], [name]: value};
   this.setState({receiptResults:users });
+}
+
+handlDBItemsChange = (i,event) => {
+  const { name, value } = event.target;
+  let users = [...this.state.DBItems];
+  users[i] = {...users[i], [name]: value};
+  this.setState({DBItems:users });
 }
 
 handleReceiptDeleteSubmit = (i,event) => {
@@ -223,26 +275,32 @@ handlePictureSubmit=event=>{
               <div>
     {this.state.DBItems.length ? (
               <List>
-                {this.state.DBItems.map(result => (
+                {this.state.DBItems.map((result,i) => (
+
                   <ListItem key={result._id} >
                     
                       <strong>
-                        Item: {result.name}
+                        Item:
                       </strong>
-                      <br></br>
+                        <Input
+                        value={result.name||""}
+                        onChange={this.handlDBItemsChange.bind(this,i)}
+                        name="name"
+                        placeholder="item name"/>
                       <strong>
                         Quantity:
                         </strong>
                         <Input
-                        value={result.quantity}
-                        onChange={this.handleInputChange}
-                        name="itemQuantityUpdate"/>
+                        value={result.quantity||""}
+                        onChange={this.handlDBItemsChange.bind(this,i)}
+                        name="quantity"
+                        placeholder="quantity in numbers"/>
                       <FormBtn
-                      onClick={() => this.handleUpdateSubmit(result._id)}
+                      onClick={this.handleUpdateSubmit.bind(this,i)}
                       >
                       Update
                       </FormBtn>
-                      <DeleteBtn onClick={() => this.handleDeleteSubmit(result._id)} >Delete</DeleteBtn>                    
+                      <DeleteBtn onClick={this.handleDeleteSubmit.bind(this,i)} >Delete</DeleteBtn>                    
                   </ListItem>
                 ))}
               </List>
