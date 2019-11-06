@@ -1,6 +1,4 @@
 import React, {Component} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBModalFooter, MDBIcon, MDBCardHeader, MDBBtn, MDBInput} from "mdbreact";
-import Button from 'react-bootstrap/Button'
 import axios from "axios";
 import fakeAuth from '../utils/fakeAuth';
 

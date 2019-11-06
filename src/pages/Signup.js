@@ -1,7 +1,7 @@
 import React, { Component }  from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import axios from "axios";
-import fakeAuth from '../utils/fakeAuth';
+// import fakeAuth from '../utils/fakeAuth';
 
 
 class FormPage extends Component {

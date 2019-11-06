@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBModalFooter, MDBIcon, MDBCardHeader, MDBBtn, MDBInput} from "mdbreact";
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button'
 import axios from "axios";
-import fakeAuth from '../utils/fakeAuth';
+import { Link } from "react-router-dom";
+// import fakeAuth from '../utils/fakeAuth';
 
 class Login extends Component {
   // Setting the component's initial state
@@ -48,7 +48,7 @@ class Login extends Component {
 
   render() {
   return (
-  <div className="logincontainer">>
+  <div className="logincontainer">
   <h1>Wonder Kitch</h1>
   <Card className="aboutapp">
     <Card.Body>
@@ -57,9 +57,9 @@ class Login extends Component {
       </Card.Text>
     </Card.Body>
   </Card>
-  <MDBContainer className="frontbox">
+  <MDBContainer>
       <MDBRow>
-        <MDBCol md="8">
+        <MDBCol md="8" sm="10" className="offset-md-3">
           <MDBCard className="logincc">
             <MDBCardBody>
               <MDBCardHeader className="form-header deep-blue-gradient rounded">
@@ -110,11 +110,10 @@ class Login extends Component {
                 <div className="signup font-weight-light">
                 <MDBBtn href= "/signup"
                   color="grey"
-                  className="mb-3"
+                  className="mb-2"
                   type="submit"
-                  
                 >
-                  Not a member? Click here to Sign up!
+                Click here to Sign up!
                 </MDBBtn>
                   
                 </div>
@@ -125,12 +124,17 @@ class Login extends Component {
       </MDBRow>
     </MDBContainer>
   <Card className="aboutus">
-    <Card.Body>
-      <Card.Text>
-      <Button variant="link" href="/Teampage">Our team is passionate about making your life simpler. Click here to learn more about us!</Button>
-      </Card.Text>
-    </Card.Body>
-  </Card>
+        <Card.Body>
+        <Card.Text>
+        <Link
+              to="/teampage"
+              className={window.location.pathname === "/teampage"}
+            >
+            <p>Our team is passionate about making your life simpler. Click here to learn more about us!</p>
+          </Link>
+          </Card.Text>
+          </Card.Body>
+          </Card>
     </div>
   );
   }
