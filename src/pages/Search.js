@@ -154,7 +154,7 @@ class Search extends Component {
               <MDBBtn className="recipebutton"
                 onClick={this.handleFormSubmit}
               >
-                Get recipe
+                Get Recipe
               </MDBBtn>
   </Col>
   <Col size="md-6">

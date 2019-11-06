@@ -3,9 +3,6 @@ import axios from "axios";
 import fakeAuth from '../utils/fakeAuth';
 
 
-
-
-
 class Logout extends Component {
     // Setting the component's initial state
     state = {
