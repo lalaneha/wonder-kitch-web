@@ -26,7 +26,7 @@ class FormPage extends Component {
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
-    axios.post("http://localhost:3000/login", {username: this.state.user, email: this.state.email,  password: this.state.password, passwordConf: this.state.password})
+    axios.post("http://localhost:3000/login", {username: this.state.user, email: this.state.email,  password: this.state.password, passwordConf: this.state.password, servingSize: this.state.servingSize})
     .then(res => {
       if (res.status === "error") {
         throw new Error(res.data.message);
