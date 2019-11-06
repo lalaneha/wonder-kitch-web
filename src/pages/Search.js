@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React, { Component} from "react";
 import Container from "../components/Container";
-// import SearchResults from "../components/SearchResults";
 import Alert from "../components/Alert";
 import axios from 'axios';
-import { Input, FormBtn } from "../components/Form";
+import { Input } from "../components/Form";
 import { List, ListItem } from "../components/List";
 import Col from "../components/Col";
 import Row from "../components/Row";
+import { MDBBtn } from "mdbreact";
 
 class Search extends Component {
   state = {
@@ -14,15 +14,13 @@ class Search extends Component {
     results: [],
     error: "",
     q:"",
-    Answer:""
+    Answer:"",
+    analyzedInstructions:[],
+    ingredients:[],
+    nutrients:[],
+    ingred:"",
+    nutrent:""
   };
-
-  // When the component mounts, get a list of all available base breeds and update this.state.breeds
-  // componentDidMount() {
-  //   API.getBaseBreedsList()
-  //     .then(res => this.setState({ breeds: res.data.message }))
-  //     .catch(err => console.log(err));
-  // }
 
   handleInputChange = event => {
     const {name ,value} =event.target;
@@ -43,9 +41,54 @@ class Search extends Component {
       .catch(err => this.setState({ error: err.message }));
   };
 
-  handleFormView = (id) => {
-    console.log("this is id "+id)
+  handleFormSubmit2 = event => {
+    event.preventDefault();
+    axios.get("http://localhost:3001/recipeSearch/" +this.state.search)
+      .then(res => {
+        if (res.status === "error") {
+          throw new Error(res.data.message);
+        }
+        console.log(res)
+        this.setState({results:res.data.results})
+        // this.setState({ results: res.data.message, error: "" });
+      })
+      .catch(err => this.setState({ error: err.message }));
   };
+
+  handleFormView = id => {
+    console.log("this is id "+id)
+    axios.get("http://localhost:3001/recipeNutrition/" +id)
+    .then(res => {
+      if (res.status === "error") {
+        throw new Error(res.data.message);
+      }
+      console.log(res.data.nutrition.nutrients)
+      let ing="";
+      let nut="";
+      for (let i = 0; i < res.data.nutrition.ingredients.length; i++) {
+        ing = ing + res.data.nutrition.ingredients[i].name+" "+res.data.nutrition.ingredients[i].amount+" "+res.data.nutrition.ingredients[i].unit+", "
+      }
+      for (let j = 0; j < res.data.nutrition.nutrients.length; j++) {
+        nut = nut + res.data.nutrition.nutrients[j].title+" "+res.data.nutrition.nutrients[j].amount+" "+res.data.nutrition.nutrients[j].unit+", "
+      }
+
+      this.setState({ingred:ing})
+      this.setState({nutrent:nut})
+      this.setState({ ingredients: res.data.nutrition.ingredients, error: "" });
+      this.setState({ analyzedInstructions: res.data.analyzedInstructions[0].steps, error: "" });
+      this.setState({ nutrients: res.data.nutrition.nutrients, error: "" });
+    })
+    .catch(err => this.setState({ error: err.message }));
+
+  };
+  
+  handleHideInfo = event => {
+    let arr =[];
+    this.setState({analyzedInstructions:arr})
+    this.setState({nutrients:arr})
+    this.setState({ingredients:arr})
+    this.setState({ingred:"", nutrent:""})
+  }
 
   handleQuestionSubmit = event => {
     event.preventDefault();  
@@ -65,7 +108,7 @@ class Search extends Component {
   render() {
     return (
       <div>
-        <Container style={{ minHeight: "80%" }}>
+        <Container>
           <h2 className="text-center">Search for recipes by name or by key ingredients!</h2>
           <Alert
             type="danger"
@@ -74,38 +117,49 @@ class Search extends Component {
             {this.state.error}
           </Alert>
 <Row>
-    <Col size="md-4">
+    <Col size="md-9">
     <Input
                 value={this.state.q}
                 onChange={this.handleInputChange}
                 name="q"
                 placeholder="Any nutrition related question!"
               />
-              <FormBtn
+    </Col>
+    <Col size="md-3">
+    <MDBBtn className="recipebutton"
                 onClick={this.handleQuestionSubmit}
               >
                 Get Answer
-              </FormBtn>
-              <strong>
-                {this.state.Answer}
-              </strong>
+                </MDBBtn>
 </Col>
 </Row>
 <Row>
 <Col size="md-12">
+              <strong>
+                {this.state.Answer}
+              </strong>
+              </Col>
+              </Row>
+
+<Row>
+<Col size="md-9">
           <Input
                 value={this.state.search}
                 onChange={this.handleInputChange}
                 name="search"
                 placeholder="Please seperate ingredients with a comma"
               />
-              <FormBtn
+</Col>
+<Col size="md-3">
+              <MDBBtn className="recipebutton"
                 onClick={this.handleFormSubmit}
               >
-                get recipe
-              </FormBtn>
-  
+                Get recipe
+              </MDBBtn>
+  </Col>
+  <Col size="md-6">
     <div>
+    
     {this.state.results.length ? (
               <List>
                 {this.state.results.map(result => (
@@ -119,11 +173,37 @@ class Search extends Component {
                       readyInMinutes:{result.readyInMinutes}
                       </p>
                       <button
-                      data-id={result.id}
-                      onClick={this.handleFormView("data-id")}
+                      onClick={() => this.handleFormView(result.id)}
                       >
                       View Info
                       </button>
+                      <List>
+                  <ListItem key={"ing"}>
+                      <strong>
+                        {this.state.ingred}
+                      </strong>
+                  </ListItem>
+                {this.state.analyzedInstructions.map(result => (
+                  <ListItem key={result.number}>
+                      <strong>
+                        Step {result.number}: 
+                      </strong>
+                      <p>
+                        {result.step}
+                      </p>
+                  </ListItem>
+                ))}
+                  <ListItem key={"nut"}>
+                      <strong>
+                        {this.state.nutrent}
+                      </strong>
+                  </ListItem>
+                      <button
+                      onClick={this.handleHideInfo}
+                      >
+                      Hide Info
+                      </button>
+              </List>
                     
                   </ListItem>
                 ))}
@@ -134,7 +214,12 @@ class Search extends Component {
     </div>
     </Col>
     </Row>
-        </Container>
+    <Row>
+    <MDBBtn className="recipebutton" onClick={this.handleFormSubmit2}>
+      Get recipes based on items that you have in your fridge
+    </MDBBtn>
+    </Row>
+    </Container>
       </div>
     );
   }
