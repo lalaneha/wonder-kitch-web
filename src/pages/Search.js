@@ -1,11 +1,12 @@
-import React, { Component } from "react";
+import React, { Component} from "react";
 import Container from "../components/Container";
 import Alert from "../components/Alert";
 import axios from 'axios';
-import { Input, FormBtn } from "../components/Form";
+import { Input } from "../components/Form";
 import { List, ListItem } from "../components/List";
 import Col from "../components/Col";
 import Row from "../components/Row";
+import { MDBBtn } from "mdbreact";
 
 class Search extends Component {
   state = {
@@ -27,6 +28,20 @@ class Search extends Component {
   };
 
   handleFormSubmit = event => {
+    event.preventDefault();
+    axios.get("http://localhost:3001/recipeSearch/" +this.state.search)
+      .then(res => {
+        if (res.status === "error") {
+          throw new Error(res.data.message);
+        }
+        console.log(res)
+        this.setState({results:res.data.results})
+        // this.setState({ results: res.data.message, error: "" });
+      })
+      .catch(err => this.setState({ error: err.message }));
+  };
+
+  handleFormSubmit2 = event => {
     event.preventDefault();
     axios.get("http://localhost:3001/recipeSearch/" +this.state.search)
       .then(res => {
@@ -93,7 +108,7 @@ class Search extends Component {
   render() {
     return (
       <div>
-        <Container style={{ minHeight: "80%" }}>
+        <Container>
           <h2 className="text-center">Search for recipes by name or by key ingredients!</h2>
           <Alert
             type="danger"
@@ -102,38 +117,49 @@ class Search extends Component {
             {this.state.error}
           </Alert>
 <Row>
-    <Col size="md-4">
+    <Col size="md-9">
     <Input
                 value={this.state.q}
                 onChange={this.handleInputChange}
                 name="q"
                 placeholder="Any nutrition related question!"
               />
-              <FormBtn
+    </Col>
+    <Col size="md-3">
+    <MDBBtn className="recipebutton"
                 onClick={this.handleQuestionSubmit}
               >
                 Get Answer
-              </FormBtn>
-              <strong>
-                {this.state.Answer}
-              </strong>
+                </MDBBtn>
 </Col>
 </Row>
 <Row>
 <Col size="md-12">
+              <strong>
+                {this.state.Answer}
+              </strong>
+              </Col>
+              </Row>
+
+<Row>
+<Col size="md-9">
           <Input
                 value={this.state.search}
                 onChange={this.handleInputChange}
                 name="search"
                 placeholder="Please seperate ingredients with a comma"
               />
-              <FormBtn
+</Col>
+<Col size="md-3">
+              <MDBBtn className="recipebutton"
                 onClick={this.handleFormSubmit}
               >
-                get recipe
-              </FormBtn>
-  
+                Get recipe
+              </MDBBtn>
+  </Col>
+  <Col size="md-6">
     <div>
+    
     {this.state.results.length ? (
               <List>
                 {this.state.results.map(result => (
@@ -188,7 +214,12 @@ class Search extends Component {
     </div>
     </Col>
     </Row>
-        </Container>
+    <Row>
+    <MDBBtn className="recipebutton" onClick={this.handleFormSubmit2}>
+      Get recipes based on items that you have in your fridge
+    </MDBBtn>
+    </Row>
+    </Container>
       </div>
     );
   }
