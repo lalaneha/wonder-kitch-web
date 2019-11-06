@@ -111,3 +111,8 @@ p {
   margin-left: 500px;
   width: 600px;
 }
+
+.ripple-parent{
+  height:200px;
+  width:200px
+}
