@@ -157,9 +157,14 @@ class Search extends Component {
                 Get recipe
               </MDBBtn>
   </Col>
-  <Col size="md-6">
-    <div>
-    
+  </Row>
+  <Row>
+    <MDBBtn className="recipebutton" onClick={this.handleFormSubmit2}>
+      Get recipes based on items that you have in your fridge
+    </MDBBtn>
+    </Row>
+    <Row>
+    <Col size="md-8">
     {this.state.results.length ? (
               <List>
                 {this.state.results.map(result => (
@@ -177,7 +182,16 @@ class Search extends Component {
                       >
                       View Info
                       </button>
-                      <List>
+                    
+                  </ListItem>
+                ))}
+              </List>
+            ) : (
+              <h3>No Results to Display</h3>
+            )}
+    </Col>
+    <Col size="md-4">
+    <List>
                   <ListItem key={"ing"}>
                       <strong>
                         {this.state.ingred}
@@ -204,20 +218,7 @@ class Search extends Component {
                       Hide Info
                       </button>
               </List>
-                    
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-              <h3>No Results to Display</h3>
-            )}
-    </div>
     </Col>
-    </Row>
-    <Row>
-    <MDBBtn className="recipebutton" onClick={this.handleFormSubmit2}>
-      Get recipes based on items that you have in your fridge
-    </MDBBtn>
     </Row>
     </Container>
       </div>
