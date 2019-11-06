@@ -14,10 +14,10 @@ class Logout extends Component {
         navigate:false,
     };
 
-    logout=()=>{
-        localStorage.clear("token")
-        this.setState({navigate:true});
-    }
+    // logout=()=>{
+    //     localStorage.clear("token")
+    //     this.setState({navigate:true});
+    // }
 
     handleInputChange = event => {
         const { name, value} =event.target;

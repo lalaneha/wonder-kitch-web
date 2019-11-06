@@ -49,9 +49,9 @@ function App() {
           <Route exact path = "/login" component = {Login}/>
           <Route exact path="/signup" component={Signup} />
           <Route exact path = "/logout" component = {Logout}/>
-          <Route exact path="/teampage">
+          <PrivateRoute exact path="/teampage">
             <Teampage />
-          </Route>
+          </PrivateRoute>
           <PrivateRoute exact path="/home">
             <Home />
           </PrivateRoute>

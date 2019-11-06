@@ -14,6 +14,7 @@ const createMap = data => data.reduce((map, item)=>{
   return map
 }, {});
 
+
 const onSubmit = () => {
   if(file){
     console.log(file);

@@ -3,14 +3,13 @@ import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBModalFooter, MDB
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'
 import axios from "axios";
-import fakeAuth from '../utils/fakeAuth';
+
 
 class Login extends Component {
   // Setting the component's initial state
   state = {
     loguser: "",
     logemail: "",
-    isAuthenticated: false
   };
 
   handleInputChange = event => {

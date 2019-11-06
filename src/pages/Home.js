@@ -36,8 +36,8 @@ import { Link } from "react-router-dom";
         <Card.Body>
         <Card.Text>
             <Link
-              to="/#"
-              className={window.location.pathname === "/#"}
+              to="/teampage"
+              className={window.location.pathname === "/teampage"}
             >
               <p>View recipes based on what’s in your fridge</p>
             </Link>
