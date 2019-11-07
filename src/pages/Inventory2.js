@@ -29,6 +29,16 @@ class Inventory2 extends Component {
         throw new Error(res.data.message);
       }
       console.log(res.data[0].items)
+          res.data[0].items.sort((a,b)=>{
+      console.log("Line33",a.name)
+      if (a.name<b.name) {
+        return -1;
+      }
+      if (a.name>b.name) {
+        return 1;
+      }
+      return 0;
+    })
       this.setState({DBItems:res.data[0].items})
       // this.setState({ results: res.data.message, error: "" });
     })
@@ -59,9 +69,20 @@ handleUpdateSubmit = (id,event) =>{
     if (res.status === "error") {
       throw new Error(res.data.message);
     }
-    console.log(res.data[0].items)
+    console.log("Error line62")
+    // res.data[0].items.sort((a,b)=>{
+    //   console.log("Line64",a.name)
+    //   if (a.name<b.name) {
+    //     return -1;
+    //   }
+    //   if (a.name>b.name) {
+    //     return 1;
+    //   }
+    //   return 0;
+    // })
     this.setState({DBItems:res.data[0].items})
     let arr =[];
+    
     this.setState({receiptResults:arr})
   })
   .catch(err => this.setState({ error: err.message }));
@@ -85,6 +106,7 @@ handleDeleteSubmit = (id,event) =>{
         throw new Error(res.data.message);
       }
       console.log(res.data[0].items)
+      console.log("Line 109")
       this.setState({DBItems:res.data[0].items})
       let arr =[];
       this.setState({receiptResults:arr})
@@ -111,6 +133,16 @@ handleAddItemsSubmit = event => {
       this.setState({ DBItems: [this.state.receiptResults[i].annotation, this.state.receiptResults[i].tag] })
       console.log(res.config.data)
       axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
+               res.data[0].items.sort((a,b)=>{
+      console.log("Line135",a.name)
+      if (a.name<b.name) {
+        return -1;
+      }
+      if (a.name>b.name) {
+        return 1;
+      }
+      return 0;
+    })
       .then(res => {
         if (res.status === "error") {
           throw new Error(res.data.message);
@@ -130,6 +162,16 @@ handleReceiptItemsChange = (i,event) => {
   const { name, value } = event.target;
   let users = [...this.state.receiptResults];
   users[i] = {...users[i], [name]: value};
+  users.sort((a,b)=>{
+    console.log("It's an A, because A's are better than boys",a.annotation)
+    if (a.annotation<b.annotation) {
+      return -1;
+    }
+    if (a.annotation>b.annotation) {
+      return 1;
+    }
+    return 0;
+  })
   this.setState({receiptResults:users });
 }
 
@@ -137,6 +179,17 @@ handlDBItemsChange = (i,event) => {
   const { name, value } = event.target;
   let users = [...this.state.DBItems];
   users[i] = {...users[i], [name]: value};
+
+  users.sort((a,b)=>{
+    console.log("It's an A, because A's are better than boyz",a.name)
+    if (a.name<b.name) {
+      return -1;
+    }
+    if (a.name>b.name) {
+      return 1;
+    }
+    return 0;
+  })
   this.setState({DBItems:users });
 }
 
@@ -153,6 +206,16 @@ handlePictureSubmit=event=>{
       for (let i = 0; i < res.data.annotations.length; i++) {
         res.data.annotations[i].tag="";        
       }
+      res.data.annotations.sort((a,b)=>{
+        console.log("It's an A, because A's are better than boyz",a.annotation)
+        if (a.annotation<b.annotation) {
+          return -1;
+        }
+        if (a.annotation>b.annotation) {
+          return 1;
+        }
+        return 0;
+      })
       this.setState({receiptResults:res.data.annotations})
     })
     .catch(err => console.log(err));
@@ -176,12 +239,23 @@ handlePictureSubmit=event=>{
                 throw new Error(res.data.message);
               }
               this.setState({ DBItems: [this.state.itemName, this.state.itemQuantity] })
-              console.log(res.config.data)
+              console.log("here I am!!!", res.config.data)
               axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
               .then(res => {
+                
                 if (res.status === "error") {
                   throw new Error(res.data.message);
                 }
+                    res.data[0].items.sort((a,b)=>{
+                  console.log("Line249",a.name)
+                  if (a.name<b.name) {
+                    return -1;
+                  }
+                  if (a.name>b.name) {
+                    return 1;
+                  }
+                  return 0;
+                })
                 console.log(res.data[0].items)
                 this.setState({DBItems:res.data[0].items})
                 this.setState({itemName:"", itemQuantity:""})
