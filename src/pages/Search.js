@@ -169,7 +169,7 @@ class Search extends Component {
 
   render() {
     return (
-      <div>
+      <div className="searchcontainer">
         <Container>
           <h2 className="text-center">Search for recipes by name or by key ingredients!</h2>
           <Alert
@@ -222,16 +222,15 @@ class Search extends Component {
   </Row>
   <Row>
     <MDBBtn className="recipebutton" onClick={this.handleFormSubmit2}>
-      Get recipes based on items that you have in your fridge
+      Get recipes based on items in your fridge
     </MDBBtn>
     </Row>
     <Row>
     <Col size="md-8">
     {this.state.searchInfo ? (
-        <List>
+       <List>
         {this.state.ingResults.map(result => (
           <ListItem key={result.id}>
-            
               <img alt="recipe" src= {result.image} height="150px" width="150px"></img>
               <strong>
                 {result.title}
@@ -240,7 +239,7 @@ class Search extends Component {
               <button
               onClick={() => this.handleFormView2(result.id)}
               >
-              View Info
+              <a class="btn btn-primary btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
               </button>
             
           </ListItem>
@@ -258,7 +257,7 @@ class Search extends Component {
                       <button
                       onClick={() => this.handleFormView(result.id)}
                       >
-                      View Info
+                      <a className="btn btn-primary btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
                       </button>
                     
                   </ListItem>
@@ -269,7 +268,7 @@ class Search extends Component {
               )}
     </Col>
     <Col size="md-4">
-      
+    <section className= "stepslist" id="ingredients">
     {this.state.info ? (
     <List>
       {this.state.missedIng ? (
@@ -320,6 +319,7 @@ class Search extends Component {
                       </button>
               </List>
               ) : null}
+              </section>
     </Col>
     </Row>
     </Container>

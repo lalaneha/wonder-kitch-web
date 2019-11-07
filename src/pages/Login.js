@@ -129,7 +129,7 @@ class Login extends Component {
               to="/teampage"
               className={window.location.pathname === "/teampage"}
             >
-            <p>Our team is passionate about making your life simpler. Click here to learn more about us!</p>
+            <h2 className="ourteam">Our team is passionate about making your life simpler. Click here to learn more about us!</h2>
           </Link>
           </Card.Text>
           </Card.Body>
