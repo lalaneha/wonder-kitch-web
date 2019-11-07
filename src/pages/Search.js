@@ -63,7 +63,7 @@ class Search extends Component {
       if (res.status === "error") {
         throw new Error(res.data.message);
       }
-      console.log(res.data.nutrition.nutrients)
+      console.log("This is the ings and nuts", res.data)
       let ing="";
       let nut="";
       for (let i = 0; i < res.data.nutrition.ingredients.length; i++) {
@@ -75,7 +75,7 @@ class Search extends Component {
 
       this.setState({ingred:ing})
       this.setState({nutrent:nut})
-      this.setState({ ingredients: res.data.nutrition.ingredients, error: "" });
+      this.setState({ ingredients: res.data.extendedIngredients, error: "" });
       this.setState({ analyzedInstructions: res.data.analyzedInstructions[0].steps, error: "" });
       this.setState({ nutrients: res.data.nutrition.nutrients, error: "" });
     })
@@ -197,9 +197,13 @@ class Search extends Component {
     <Col size="md-4">
     <List>
                   <ListItem key={"ing"}>
-                      <strong>
-                        {this.state.ingred}
-                      </strong>
+                    <List>
+                     {this.state.ingredients.map(result=>(
+                       <ListItem key ={result.number}>
+                         {result.originalString}
+                      </ListItem>
+                     ))}
+                     </List>
                   </ListItem>
                 {this.state.analyzedInstructions.map(result => (
                   <ListItem key={result.number}>
