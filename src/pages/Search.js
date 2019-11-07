@@ -90,7 +90,7 @@ class Search extends Component {
         this.setState({missingIngredients: this.state.ingResults[i].missedIngredients})
         let missed="";
             for (let j = 0; j < this.state.ingResults[i].missedIngredients.length; j++) {
-              missed = missed+this.state.ingResults[i].missedIngredients[j].name+" "+this.state.ingResults[i].missedIngredients[j].amount+" "+this.state.ingResults[i].missedIngredients[j].unit+", "              
+              missed = missed+this.state.ingResults[i].missedIngredients[j].amount+" "+this.state.ingResults[i].missedIngredients[j].unit+" "+this.state.ingResults[i].missedIngredients[j].name+", "              
             }
             this.setState({missedIng:missed})
            }           
@@ -110,7 +110,7 @@ class Search extends Component {
       }
       this.setState({ingred:ing})
       this.setState({nutrent:nut})
-      this.setState({ ingredients: res.data.nutrition.ingredients, error: "" });
+      this.setState({ ingredients: res.data.extendedIngredients, error: "" });
       this.setState({ analyzedInstructions: res.data.analyzedInstructions[0].steps, error: "" });
       this.setState({ nutrients: res.data.nutrition.nutrients, error: "" });
       this.setState({info:true})
