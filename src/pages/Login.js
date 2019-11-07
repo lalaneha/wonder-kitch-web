@@ -28,7 +28,7 @@ class Login extends Component {
     event.preventDefault();
     console.log("test")
 
-    axios.post("http://localhost:3000/login", {logemail: this.state.logemail,  logpassword: this.state.logpassword})
+    axios.post("/login", {logemail: this.state.logemail,  logpassword: this.state.logpassword})
       .then(res => {
         console.log("look here", res.data)
         // This tells the UI we've authenticated. See fakeAuth.js
