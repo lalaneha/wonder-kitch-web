@@ -8,6 +8,10 @@ class ServingSize extends React.Component {
             message: null,
 
         };
+      
+    }
+
+    componentDidMount=()=>{
         this.checkServings(this.props.servings)
     }
     checkServings = (recipeServing) => {
