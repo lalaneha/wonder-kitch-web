@@ -7,6 +7,7 @@ import { List, ListItem } from "../components/List";
 import Col from "../components/Col";
 import Row from "../components/Row";
 import { MDBBtn } from "mdbreact";
+import ServingSize from "../components/ServingSize"
 
 class Search extends Component {
   state = {
@@ -134,7 +135,7 @@ class Search extends Component {
 
       this.setState({ingred:ing})
       this.setState({nutrent:nut})
-      this.setState({ ingredients: res.data.nutrition.ingredients, error: "" });
+      this.setState({ ingredients: res.data.extendedIngredients, error: "" });
       this.setState({ analyzedInstructions: res.data.analyzedInstructions[0].steps, error: "" });
       this.setState({ nutrients: res.data.nutrition.nutrients, error: "" });
       this.setState({missedIng:""})
@@ -165,6 +166,7 @@ class Search extends Component {
     })
     .catch(err => this.setState({ error: err.message }));
   };
+
 
 
   render() {
@@ -253,8 +255,10 @@ class Search extends Component {
                         {result.title}
                       </strong>
                       <p>
-                      readyInMinutes:{result.readyInMinutes}
+                      Ready in {result.readyInMinutes} Minutes
                       </p>
+                      <ServingSize servings={result.servings}/>
+                 
                       <button
                       onClick={() => this.handleFormView(result.id)}
                       >
@@ -283,13 +287,20 @@ class Search extends Component {
                       </strong>
                   </ListItem>):null}
                   <ListItem key={"ing"}>
+                    <List>
                     <strong>
                       Ingredients:
                     </strong>
-                    <br></br>
+                     {this.state.ingredients.map(result=>(
+                       <ListItem key ={result.number}>
+                         {result.originalString}
+                      </ListItem>
+                     ))}
+                     </List>
+                    {/* <br></br>
                       <strong>
                         {this.state.ingred}
-                      </strong>
+                      </strong> */}
                   </ListItem>
                   <strong>
                     Analyzed Steps:
