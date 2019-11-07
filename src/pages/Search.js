@@ -122,7 +122,7 @@ class Search extends Component {
                 value={this.state.q}
                 onChange={this.handleInputChange}
                 name="q"
-                placeholder="Any nutrition related question!"
+                placeholder="Ask any nutrition related question!"
               />
     </Col>
     <Col size="md-3">

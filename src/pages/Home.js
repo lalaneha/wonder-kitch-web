@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
   function Home() {
     return (
-      <div>
-        <h2 className="text-center">What would you like to do</h2>
+      <div className="homecontainer">
+      <h1>What would you like to do?</h1>
         <div className="inv">
         <Card className="inv2">
         <Card.Body>
@@ -27,7 +27,7 @@ import { Link } from "react-router-dom";
               to="/search"
               className={window.location.pathname === "/search"}
             >
-              <p>Search Recipes by Name or by Key ingredients</p>
+              <p>Recipe Search!</p>
             </Link>
             </Card.Text>
           </Card.Body>

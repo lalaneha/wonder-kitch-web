@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Container from "../components/Container";
+import Counter from "../components/Counter";
 import Col from "../components/Col";
 import DeleteBtn from "../components/DeleteBtn";
 import Row from "../components/Row";
