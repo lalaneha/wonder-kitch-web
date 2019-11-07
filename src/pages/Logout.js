@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 import fakeAuth from '../utils/fakeAuth';
+import Card from 'react-bootstrap/Card';
 
 
 class Logout extends Component {
@@ -44,7 +45,11 @@ class Logout extends Component {
 render() {
     return (    
     <div className="logoutcontainer">
-    <h1>Thank you for visiting!</h1>
+    <Card className="aboutapp">
+    <Card.Body>
+      <h1>Thank you for visitng!</h1>
+    </Card.Body>
+  </Card>
     </div>
     );
     }
