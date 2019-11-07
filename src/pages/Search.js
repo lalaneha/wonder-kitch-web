@@ -7,6 +7,7 @@ import { List, ListItem } from "../components/List";
 import Col from "../components/Col";
 import Row from "../components/Row";
 import { MDBBtn } from "mdbreact";
+import ServingSize from "../components/ServingSize"
 
 class Search extends Component {
   state = {
@@ -105,6 +106,7 @@ class Search extends Component {
   };
 
 
+
   render() {
     return (
       <div>
@@ -175,8 +177,10 @@ class Search extends Component {
                         {result.title}
                       </strong>
                       <p>
-                      readyInMinutes:{result.readyInMinutes}
+                      Ready in {result.readyInMinutes} Minutes
                       </p>
+                      <ServingSize servings={result.servings}/>
+                 
                       <button
                       onClick={() => this.handleFormView(result.id)}
                       >
