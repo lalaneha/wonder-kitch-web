@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import axios from "axios";
 import fakeAuth from '../utils/fakeAuth';
 import JokesTrivia from "../components/JokesTrivia";
+import Card from 'react-bootstrap/Card';
+
 
 class Logout extends Component {
     // Setting the component's initial state

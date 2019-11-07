@@ -52,9 +52,10 @@ class FormPage extends Component {
   render() {
   return (
     <div className="signups">  
-    <MDBContainer className="signupcc">
+    <MDBContainer>
       <MDBRow>
-        <MDBCol>
+      <MDBCol md="3" sm="0"></MDBCol>
+        <MDBCol md="6" sm="10" className="logincc">
         <form onSubmit={this.handleFormSubmit}>
             <p className="top text-center mb-4">Sign up</p>
             <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
