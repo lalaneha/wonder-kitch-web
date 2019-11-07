@@ -19,7 +19,7 @@ class Inventory2 extends Component {
       ReceiptQuantityChange:"",
       ReceiptItemsChange:"",
       DBItems:[] };
-      // this.handleReceiptItemsChange = this.handleReceiptItemsChange.bind(this);
+      this.handleDeleteSubmit = this.handleDeleteSubmit.bind(this);
   }
 
    componentDidMount() {
@@ -28,9 +28,16 @@ class Inventory2 extends Component {
       if (res.status === "error") {
         throw new Error(res.data.message);
       }
-      console.log(res.data[0].items)
+          res.data[0].items.sort((a,b)=>{
+      if (a.name<b.name) {
+        return -1;
+      }
+      if (a.name>b.name) {
+        return 1;
+      }
+      return 0;
+    })
       this.setState({DBItems:res.data[0].items})
-      // this.setState({ results: res.data.message, error: "" });
     })
     .catch(err => this.setState({ error: err.message }));
   }
@@ -42,16 +49,68 @@ handlePictureChange = event =>{
   })
 }
 
-handleUpdateSubmit = id =>{
-  
+handleUpdateSubmit = (id,event) =>{
+  axios.post("http://localhost:3001/updateItem",{
+    userID: localStorage.getItem("userID"),
+    itemID: this.state.DBItems[id]._id,
+    name:this.state.DBItems[id].name,
+    quantity:this.state.DBItems[id].quantity
+  }
+)
+.then(res => {
+  if (res.status === "error") {
+    throw new Error(res.data.message);
+  }
+  axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
+  .then(res => {
+    if (res.status === "error") {
+      throw new Error(res.data.message);
+    }
+    res.data[0].items.sort((a,b)=>{
+      if (a.name<b.name) {
+        return -1;
+      }
+      if (a.name>b.name) {
+        return 1;
+      }
+      return 0;
+    })
+    this.setState({DBItems:res.data[0].items})
+    let arr =[];
+    
+    this.setState({receiptResults:arr})
+  })
+  .catch(err => this.setState({ error: err.message }));
+})
+.catch(err => this.setState({ error: err.message }));
 }
-handleDeleteSubmit = id =>{
 
+handleDeleteSubmit = (id,event) =>{
+  axios.post("http://localhost:3001/deleteItem",{
+      userID: localStorage.getItem("userID"),
+      itemID: this.state.DBItems[id]._id,
+    }
+  )
+  .then(res => {
+    if (res.status === "error") {
+      throw new Error(res.data.message);
+    }
+    axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
+    .then(res => {
+      if (res.status === "error") {
+        throw new Error(res.data.message);
+      }
+      this.setState({DBItems:res.data[0].items})
+      let arr =[];
+      this.setState({receiptResults:arr})
+    })
+    .catch(err => this.setState({ error: err.message }));
+  })
+  .catch(err => this.setState({ error: err.message }));
 }
 
 handleAddItemsSubmit = event => {
   event.preventDefault();
-  console.log(this.state.receiptResults)
   for (let i = 0; i < this.state.receiptResults.length; i++) {
     axios.post("http://localhost:3001/addItems",{
       userID: localStorage.getItem("userID"),
@@ -64,13 +123,21 @@ handleAddItemsSubmit = event => {
         throw new Error(res.data.message);
       }
       this.setState({ DBItems: [this.state.receiptResults[i].annotation, this.state.receiptResults[i].tag] })
-      console.log(res.config.data)
       axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
+               
       .then(res => {
         if (res.status === "error") {
           throw new Error(res.data.message);
-        }
-        console.log(res.data[0].items)
+        } 
+        res.data[0].items.sort((a,b)=>{
+          if (a.name<b.name) {
+            return -1;
+          }
+          if (a.name>b.name) {
+            return 1;
+          }
+          return 0;
+        })
         this.setState({DBItems:res.data[0].items})
         let arr =[];
         this.setState({receiptResults:arr})
@@ -88,6 +155,13 @@ handleReceiptItemsChange = (i,event) => {
   this.setState({receiptResults:users });
 }
 
+handlDBItemsChange = (i,event) => {
+  const { name, value } = event.target;
+  let users = [...this.state.DBItems];
+  users[i] = {...users[i], [name]: value};
+  this.setState({DBItems:users });
+}
+
 handleReceiptDeleteSubmit = (i,event) => {
   let users = [...this.state.receiptResults];
   users.splice(i, 1);
@@ -101,6 +175,15 @@ handlePictureSubmit=event=>{
       for (let i = 0; i < res.data.annotations.length; i++) {
         res.data.annotations[i].tag="";        
       }
+      res.data.annotations.sort((a,b)=>{
+        if (a.annotation<b.annotation) {
+          return -1;
+        }
+        if (a.annotation>b.annotation) {
+          return 1;
+        }
+        return 0;
+      })
       this.setState({receiptResults:res.data.annotations})
     })
     .catch(err => console.log(err));
@@ -124,13 +207,21 @@ handlePictureSubmit=event=>{
                 throw new Error(res.data.message);
               }
               this.setState({ DBItems: [this.state.itemName, this.state.itemQuantity] })
-              console.log(res.config.data)
               axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
               .then(res => {
+                
                 if (res.status === "error") {
                   throw new Error(res.data.message);
                 }
-                console.log(res.data[0].items)
+                    res.data[0].items.sort((a,b)=>{
+                  if (a.name<b.name) {
+                    return -1;
+                  }
+                  if (a.name>b.name) {
+                    return 1;
+                  }
+                  return 0;
+                })
                 this.setState({DBItems:res.data[0].items})
                 this.setState({itemName:"", itemQuantity:""})
               })
@@ -142,8 +233,7 @@ handlePictureSubmit=event=>{
 
         render() {
           return (
-            
-            <div>
+            <div className="searchcontainer">
       <Container style={{ minHeight: "80%" }}>
       <Row>
           <Col size="md-6">
@@ -167,7 +257,7 @@ handlePictureSubmit=event=>{
                 {this.state.receiptResults.map((result, i)=> (
                   <ListItem key={i}>
                       <DeleteBtn onClick={this.handleReceiptDeleteSubmit.bind(this,i)} >Delete</DeleteBtn>     
-                      <img alt="recipe" src= {result.image}  height="100px" width="100px"></img>
+                      <img alt="recipe" src= {result.image}  height="75px" width="75px"></img>
                   
                       <Input
                         value={result.annotation||""}
@@ -221,28 +311,35 @@ handlePictureSubmit=event=>{
                 Add item
               </FormBtn>
               <div>
+            
     {this.state.DBItems.length ? (
               <List>
-                {this.state.DBItems.map(result => (
+                {this.state.DBItems.map((result,i) => (
+
                   <ListItem key={result._id} >
                     
                       <strong>
-                        Item: {result.name}
+                        Item:
                       </strong>
-                      <br></br>
+                        <Input
+                        value={result.name||""}
+                        onChange={this.handlDBItemsChange.bind(this,i)}
+                        name="name"
+                        placeholder="item name"/>
                       <strong>
                         Quantity:
                         </strong>
                         <Input
-                        value={result.quantity}
-                        onChange={this.handleInputChange}
-                        name="itemQuantityUpdate"/>
+                        value={result.quantity||""}
+                        onChange={this.handlDBItemsChange.bind(this,i)}
+                        name="quantity"
+                        placeholder="quantity in numbers"/>
                       <FormBtn
-                      onClick={() => this.handleUpdateSubmit(result._id)}
+                      onClick={this.handleUpdateSubmit.bind(this,i)}
                       >
                       Update
                       </FormBtn>
-                      <DeleteBtn onClick={() => this.handleDeleteSubmit(result._id)} >Delete</DeleteBtn>                    
+                      <DeleteBtn onClick={this.handleDeleteSubmit.bind(this,i)} >Delete</DeleteBtn>                    
                   </ListItem>
                 ))}
               </List>
@@ -254,7 +351,6 @@ handlePictureSubmit=event=>{
         </Row>
       </Container>
       </div>
-    
     );
     }
 };

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBModalFooter, MDBIcon, MDBCardHeader, MDBBtn, MDBInput} from "mdbreact";
+import { MDBContainer, MDBRow, MDBCol, MDBCardBody, MDBModalFooter, MDBIcon, MDBCardHeader, MDBBtn, MDBInput} from "mdbreact";
 import Card from 'react-bootstrap/Card';
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -59,8 +59,8 @@ class Login extends Component {
   </Card>
   <MDBContainer>
       <MDBRow>
-        <MDBCol md="8" sm="10" className="offset-md-3">
-          <MDBCard className="logincc">
+        <MDBCol md="3" sm="0"></MDBCol>
+        <MDBCol md="6" sm="10" className="logincc">
             <MDBCardBody>
               <MDBCardHeader className="form-header deep-blue-gradient rounded">
                 <h3 className="my-3">
@@ -119,7 +119,6 @@ class Login extends Component {
                 </div>
               </MDBModalFooter>
             </MDBCardBody>
-          </MDBCard>
         </MDBCol>
       </MDBRow>
     </MDBContainer>
@@ -130,7 +129,7 @@ class Login extends Component {
               to="/teampage"
               className={window.location.pathname === "/teampage"}
             >
-            <p>Our team is passionate about making your life simpler. Click here to learn more about us!</p>
+            <h2 className="ourteam">Our team is passionate about making your life simpler. Click here to learn more about us!</h2>
           </Link>
           </Card.Text>
           </Card.Body>

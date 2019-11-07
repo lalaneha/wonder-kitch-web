@@ -1,9 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 import fakeAuth from '../utils/fakeAuth';
-
-
-
+import JokesTrivia from "../components/JokesTrivia";
 
 
 class Logout extends Component {
@@ -48,6 +46,7 @@ render() {
     return (    
     <div className="logoutcontainer">
     <h1>Thank you for visiting!</h1>
+    <JokesTrivia></JokesTrivia>
     </div>
     );
     }

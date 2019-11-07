@@ -26,7 +26,7 @@ class FormPage extends Component {
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
-    axios.post("http://localhost:3000/login", {username: this.state.user, email: this.state.email,  password: this.state.password, passwordConf: this.state.password})
+    axios.post("http://localhost:3000/login", {username: this.state.user, email: this.state.email,  password: this.state.password, passwordConf: this.state.password, servingSize: this.state.servingSize})
     .then(res => {
       if (res.status === "error") {
         throw new Error(res.data.message);
@@ -52,9 +52,10 @@ class FormPage extends Component {
   render() {
   return (
     <div className="signups">  
-    <MDBContainer className="signupcc">
+    <MDBContainer>
       <MDBRow>
-        <MDBCol>
+      <MDBCol md="3" sm="0"></MDBCol>
+        <MDBCol md="6" sm="10" className="logincc">
         <form onSubmit={this.handleFormSubmit}>
             <p className="top text-center mb-4">Sign up</p>
             <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
