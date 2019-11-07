@@ -233,8 +233,7 @@ handlePictureSubmit=event=>{
 
         render() {
           return (
-            
-            <div>
+            <div className="searchcontainer">
       <Container style={{ minHeight: "80%" }}>
       <Row>
           <Col size="md-6">
@@ -312,6 +311,7 @@ handlePictureSubmit=event=>{
                 Add item
               </FormBtn>
               <div>
+            
     {this.state.DBItems.length ? (
               <List>
                 {this.state.DBItems.map((result,i) => (
@@ -351,7 +351,6 @@ handlePictureSubmit=event=>{
         </Row>
       </Container>
       </div>
-    
     );
     }
 };

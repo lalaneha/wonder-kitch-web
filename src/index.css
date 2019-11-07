@@ -30,13 +30,13 @@ h1 {
 
 p {
   text-align: center;
-  font-size: 26px;
+  font-size: 20px;
   color: #25712A;
 }
 
 @media screen and (max-width: 600px) {
   p {
-    font-size: 20px;
+    font-size: 16px;
   }
 }
 
@@ -119,6 +119,11 @@ p {
 
 }
 
+.btn {
+  background-color: #A1D5A9;
+  border: none;
+}
+
 .logoutcontainer{
   background-image: url("https://www.hommemaker.com/wp-content/uploads/2018/11/Kitchen_1_004_With_Food-OS.jpg");
   background-repeat: no-repeat;
@@ -133,4 +138,19 @@ p {
   background-position: center;
   background-size: cover;
   height: 800px;
+}
+
+.ourteam{
+  font-size: 20px;
+  color: #25712A;
+}
+
+@media screen and (max-width: 600px) {
+  .ourteam {
+    font-size: 16px;
+  }
+}
+
+.searchcontainer{
+  min-height: 100vh;
 }
