@@ -28,9 +28,7 @@ class Inventory2 extends Component {
       if (res.status === "error") {
         throw new Error(res.data.message);
       }
-      console.log(res.data[0].items)
       this.setState({DBItems:res.data[0].items})
-      // this.setState({ results: res.data.message, error: "" });
     })
     .catch(err => this.setState({ error: err.message }));
   }
@@ -59,7 +57,6 @@ handleUpdateSubmit = (id,event) =>{
     if (res.status === "error") {
       throw new Error(res.data.message);
     }
-    console.log(res.data[0].items)
     this.setState({DBItems:res.data[0].items})
     let arr =[];
     this.setState({receiptResults:arr})
@@ -84,7 +81,6 @@ handleDeleteSubmit = (id,event) =>{
       if (res.status === "error") {
         throw new Error(res.data.message);
       }
-      console.log(res.data[0].items)
       this.setState({DBItems:res.data[0].items})
       let arr =[];
       this.setState({receiptResults:arr})
@@ -96,7 +92,6 @@ handleDeleteSubmit = (id,event) =>{
 
 handleAddItemsSubmit = event => {
   event.preventDefault();
-  console.log(this.state.receiptResults)
   for (let i = 0; i < this.state.receiptResults.length; i++) {
     axios.post("http://localhost:3001/addItems",{
       userID: localStorage.getItem("userID"),
@@ -109,13 +104,11 @@ handleAddItemsSubmit = event => {
         throw new Error(res.data.message);
       }
       this.setState({ DBItems: [this.state.receiptResults[i].annotation, this.state.receiptResults[i].tag] })
-      console.log(res.config.data)
       axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
       .then(res => {
         if (res.status === "error") {
           throw new Error(res.data.message);
         }
-        console.log(res.data[0].items)
         this.setState({DBItems:res.data[0].items})
         let arr =[];
         this.setState({receiptResults:arr})
@@ -176,13 +169,11 @@ handlePictureSubmit=event=>{
                 throw new Error(res.data.message);
               }
               this.setState({ DBItems: [this.state.itemName, this.state.itemQuantity] })
-              console.log(res.config.data)
               axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
               .then(res => {
                 if (res.status === "error") {
                   throw new Error(res.data.message);
                 }
-                console.log(res.data[0].items)
                 this.setState({DBItems:res.data[0].items})
                 this.setState({itemName:"", itemQuantity:""})
               })
@@ -219,7 +210,7 @@ handlePictureSubmit=event=>{
                 {this.state.receiptResults.map((result, i)=> (
                   <ListItem key={i}>
                       <DeleteBtn onClick={this.handleReceiptDeleteSubmit.bind(this,i)} >Delete</DeleteBtn>     
-                      <img alt="recipe" src= {result.image}  height="100px" width="100px"></img>
+                      <img alt="recipe" src= {result.image}  height="75px" width="75px"></img>
                   
                       <Input
                         value={result.annotation||""}
