@@ -1,13 +1,14 @@
 import React, { Component} from "react";
 import Container from "../components/Container";
-import Alert from "../components/Alert";
+// import Alert from "../components/Alert";
 import axios from 'axios';
 import { Input } from "../components/Form";
 import { List, ListItem } from "../components/List";
 import Col from "../components/Col";
 import Row from "../components/Row";
 import { MDBBtn } from "mdbreact";
-import ServingSize from "../components/ServingSize"
+import ServingSize from "../components/ServingSize";
+import Alert, { openAlert } from "../components/InvAlert";
 
 class Search extends Component {
   state = {
@@ -65,7 +66,12 @@ class Search extends Component {
         this.setState({ingResults:arr})
         this.setState({results:res.data.results})
       })
-      .catch(err => this.setState({ error: err.message }));
+      .catch(err => {
+        
+      openAlert({ message: 'Please insert Ingredients', type: 'warning' });
+      // openAlert({ message: 'Please insert Ingredients', type: 'info' });
+        // this.setState({ error: err.message })
+      });
   };
 
   handleFormSubmit2 = event => {
@@ -81,8 +87,25 @@ class Search extends Component {
         let arr=[];
         this.setState({results:arr})
       })
-      .catch(err => this.setState({ error: err.message }));
+      .catch(err => {
+        
+      openAlert({ message: 'Your fridge is empty', type: 'danger' });
+        // this.setState({ error: err.message })
+      });
   };
+  handleFormSave = (id,name,image) => {
+    axios.post("http://localhost:3001/addRecipe",{
+      userID: localStorage.getItem("userID"),
+      name: name,
+      image: image,
+      recipeId:id
+    }).then(function(data){
+      openAlert({ message: 'Recipe has been saved', type: 'success' });
+    }).catch(function(err){
+      console.log(err)
+    });
+  };
+
   handleFormView2 = id => {
     for (let i = 0; i < this.state.ingResults.length; i++) {
       
@@ -164,7 +187,10 @@ class Search extends Component {
       }
       this.setState({Answer:res.data.answer})
     })
-    .catch(err => this.setState({ error: err.message }));
+    .catch(err => {
+      openAlert({ message: 'Please insert a nutrition related question', type: 'info' });
+      // this.setState({ error: err.message })
+  });
   };
 
 
@@ -243,6 +269,11 @@ class Search extends Component {
               >
               <a class="btn btn-primary btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
               </button>
+              <button
+              onClick={() => this.handleFormSave(result.id,result.title,result.image)}
+              >
+              <a class="btn btn-primary btn-xl js-scroll-trigger" >Save</a>
+              </button>
             
           </ListItem>
         ))}
@@ -263,6 +294,11 @@ class Search extends Component {
                       >
                       <a className="btn btn-primary btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
                       </button>
+                      <button
+              onClick={() => this.handleFormSave(result.id,result.title,"https://spoonacular.com/recipeImages/" +result.imageUrls[0])}
+              >
+              <a class="btn btn-primary btn-xl js-scroll-trigger" >Save</a>
+              </button>
                     
                   </ListItem>
                 ))}
