@@ -7,6 +7,8 @@ import API from "../utils/API";
 import { Input, FormBtn } from "../components/Form";
 import { List, ListItem } from "../components/List";
 import axios from "axios";
+// import Numberinput from "../components/Numberinput";
+import { MDBInput } from 'mdbreact';
 
 class Inventory2 extends Component {
   constructor(props) {
@@ -294,7 +296,7 @@ handlePictureSubmit=event=>{
             )}
     </div>
     </Col>
-    <Col size="md-6" >
+    <Col size="md-6">
     <strong>
     Item:
     </strong>
@@ -318,14 +320,16 @@ handlePictureSubmit=event=>{
               >
                 Add item
               </FormBtn>
-              <div>
+      <div>
+  
             
     {this.state.DBItems.length ? (
               <List>
                 {this.state.DBItems.map((result,i) => (
 
                   <ListItem key={result._id} >
-                    
+                    <Row>
+                    <Col size="md-9">
                       <strong>
                         Item:
                       </strong>
@@ -334,14 +338,18 @@ handlePictureSubmit=event=>{
                         onChange={this.handlDBItemsChange.bind(this,i)}
                         name="name"
                         placeholder="item name"/>
+                        </Col>
+                        <Col size="md-3">
                       <strong>
                         Quantity:
                         </strong>
-                        <Input
+                        <MDBInput id="qtybutton"
                         value={result.quantity||""}
                         onChange={this.handlDBItemsChange.bind(this,i)}
                         name="quantity"
-                        placeholder="quantity in numbers"/>
+                        type="number" />
+                        </Col>
+                        </Row>
                       <FormBtn
                       onClick={this.handleUpdateSubmit.bind(this,i)}
                       >
