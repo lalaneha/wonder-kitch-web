@@ -27,6 +27,8 @@ class Search extends Component {
     ingResults:[],
     missingIngredients:[],
     missedIng:"",
+    recipeImage:"",
+    recipeTitle:"",
     info:false,
     searchInfo:false
   };
@@ -55,6 +57,7 @@ class Search extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
+    if(this.state.search){
     axios.get("http://localhost:3001/recipeSearch/" +this.state.search)
       .then(res => {
         if (res.status === "error") {
@@ -67,16 +70,19 @@ class Search extends Component {
         this.setState({results:res.data.results})
       })
       .catch(err => {
-        
-      openAlert({ message: 'Please insert Ingredients', type: 'warning' });
-      // openAlert({ message: 'Please insert Ingredients', type: 'info' });
-        // this.setState({ error: err.message })
+        console.log(err);
       });
+    }
+    else{
+      openAlert({ message: 'Please insert Ingredients', type: 'warning' });
+      
+    }
   };
 
   handleFormSubmit2 = event => {
     event.preventDefault();
-    axios.get("http://localhost:3001/recipeIngredients/" +this.state.recipeQuery)
+    if (this.state.recipeQuery) {
+      axios.get("http://localhost:3001/recipeIngredients/" +this.state.recipeQuery)
       .then(res => {
         if (res.status === "error") {
           throw new Error(res.data.message);
@@ -88,11 +94,14 @@ class Search extends Component {
         this.setState({results:arr})
       })
       .catch(err => {
-        
-      openAlert({ message: 'Your fridge is empty', type: 'danger' });
-        // this.setState({ error: err.message })
+        console.log(err);
       });
+    }
+    else{
+      openAlert({ message: 'Your fridge is empty', type: 'danger' });
+    }
   };
+
   handleFormSave = (id,name,image) => {
     axios.post("http://localhost:3001/addRecipe",{
       userID: localStorage.getItem("userID"),
@@ -133,6 +142,8 @@ class Search extends Component {
       }
       this.setState({ingred:ing})
       this.setState({nutrent:nut})
+      this.setState({recipeTitle:res.data.title})
+      this.setState({recipeImage:res.data.image})
       this.setState({ ingredients: res.data.extendedIngredients, error: "" });
       this.setState({ analyzedInstructions: res.data.analyzedInstructions[0].steps, error: "" });
       this.setState({ nutrients: res.data.nutrition.nutrients, error: "" });
@@ -158,6 +169,8 @@ class Search extends Component {
 
       this.setState({ingred:ing})
       this.setState({nutrent:nut})
+      this.setState({recipeTitle:res.data.title})
+      this.setState({recipeImage:res.data.image})
       this.setState({ ingredients: res.data.extendedIngredients, error: "" });
       this.setState({ analyzedInstructions: res.data.analyzedInstructions[0].steps, error: "" });
       this.setState({ nutrients: res.data.nutrition.nutrients, error: "" });
@@ -179,7 +192,8 @@ class Search extends Component {
   }
 
   handleQuestionSubmit = event => {
-    event.preventDefault();  
+    event.preventDefault(); 
+    if(this.state.q){ 
     axios.get("http://localhost:3001/recipeQuestion/" +this.state.q)
     .then(res => {
       if (res.status === "error") {
@@ -188,9 +202,12 @@ class Search extends Component {
       this.setState({Answer:res.data.answer})
     })
     .catch(err => {
-      openAlert({ message: 'Please insert a nutrition related question', type: 'info' });
-      // this.setState({ error: err.message })
-  });
+     console.log(err);
+    });
+  }
+  else{
+    openAlert({ message: 'Please insert a nutrition related question', type: 'info' });
+}
   };
 
 
@@ -267,12 +284,12 @@ class Search extends Component {
               <button
               onClick={() => this.handleFormView2(result.id)}
               >
-              <a class="btn btn-primary btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
+              <a class="btn btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
               </button>
               <button
               onClick={() => this.handleFormSave(result.id,result.title,result.image)}
               >
-              <a class="btn btn-primary btn-xl js-scroll-trigger" >Save</a>
+              <a class="btn btn-xl js-scroll-trigger">Save</a>
               </button>
             
           </ListItem>
@@ -292,12 +309,12 @@ class Search extends Component {
                       <button
                       onClick={() => this.handleFormView(result.id)}
                       >
-                      <a className="btn btn-primary btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
+                      <a className="btn btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
                       </button>
                       <button
               onClick={() => this.handleFormSave(result.id,result.title,"https://spoonacular.com/recipeImages/" +result.imageUrls[0])}
               >
-              <a class="btn btn-primary btn-xl js-scroll-trigger" >Save</a>
+              <a class="btn btn-xl js-scroll-trigger">Save</a>
               </button>
                     
                   </ListItem>
@@ -311,6 +328,12 @@ class Search extends Component {
     <section className= "stepslist" id="ingredients">
     {this.state.info ? (
     <List>
+    <ListItem key={"img"}>     
+        <img alt="recipe" src= {this.state.recipeImage}  height="75px" width="75px"></img>
+      <strong>
+          {this.state.recipeTitle}
+      </strong>
+    </ListItem>
       {this.state.missedIng ? (
                   <ListItem key={"mis"}>
                     <strong>

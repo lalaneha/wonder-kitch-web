@@ -183,7 +183,7 @@ handlePictureSubmit=event=>{
     API.takePicture(this.state.file) 
     .then(res => {
       for (let i = 0; i < res.data.annotations.length; i++) {
-        res.data.annotations[i].tag="";        
+        res.data.annotations[i].tag=1;        
       }
       res.data.annotations.sort((a,b)=>{
         if (a.annotation<b.annotation) {
@@ -268,20 +268,29 @@ handlePictureSubmit=event=>{
                   <ListItem key={i}>
                       <DeleteBtn onClick={this.handleReceiptDeleteSubmit.bind(this,i)} >Delete</DeleteBtn>     
                       <img alt="recipe" src= {result.image}  height="75px" width="75px"></img>
-                  
-                      <Input
-                        value={result.annotation||""}
-                          onChange={this.handleReceiptItemsChange.bind(this,i)}
-                          name="annotation"
-                          />
-                      <p>
-                        Quantity:
-                        </p>
+                      <Row>
+                    <Col size="md-9">
+                      <strong>
+                        Item:
+                      </strong>
                         <Input
+                        value={result.annotation||""}
+                        onChange={this.handleReceiptItemsChange.bind(this,i)}
+                        name="annotation"
+                        placeholder="item name"/>
+                        </Col>
+                        <Col size="md-3">
+                      <strong>
+                        Quantity:
+                        </strong>
+                        <MDBInput id="qtybutton"
                         value={result.tag||""}
                         onChange={this.handleReceiptItemsChange.bind(this,i)}
                         name="tag"
-                        placeholder="quantity in numbers"/>
+                        type="number" />
+                        </Col>
+                        </Row>
+                     
                   </ListItem>
                 ))}
               </List>
