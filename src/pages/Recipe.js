@@ -123,11 +123,7 @@ viewInfo = id => {
     this.setState({ analyzedInstructions: res.data.analyzedInstructions[0].steps, error: "" });
     this.setState({ nutrients: res.data.nutrition.nutrients, error: "" });
     this.setState({info:true})
-    console.log(this.state.ingred)
-    console.log(this.state.ingredients)
-    console.log(this.state.nutrients)
-    console.log(this.state.analyzedInstructions)
-    console.log(this.state.nutrent)
+    console.log(this.state.info)
   })
   .catch(err => this.setState({ error: err.message }));
 }
@@ -182,7 +178,7 @@ handleHideInfo = event => {
                     </strong>
                     <br></br>
                     <strong>
-                        {result.date};
+                        {result.date}
                     </strong>                     
               <button
               onClick={() => this.handleFormView2(i)}
