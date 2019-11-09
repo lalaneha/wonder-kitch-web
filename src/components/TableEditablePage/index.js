@@ -1,22 +1,13 @@
 import React from "react";
 import { MDBCard, MDBCardHeader, MDBCardBody, MDBTableEditable } from "mdbreact";
 
-// const columns = ["Person Name", "Age", "Company Name", "Country", "City"];
-
-// const data = [
-//   ["Aurelia Vega", 30, "Deepends", "Spain", "Madrid"],
-//   ["Guerra Cortez", 45, "Insectus", "USA", "San Francisco"],
-//   ["Guadalupe House", 26, "Isotronic", "Germany", "Frankfurt am Main"],
-//   ["Elisa Gallagher", 31, "Portica", "United Kingdom", "London"]
-// ];
-
-const columns = ["Item", "Quantity"];
+const columns = ["Person Name", "Age", "Company Name", "Country", "City"];
 
 const data = [
-  ["Bananas", 2],
-  ["Oatmeal", 3],
-  ["Onion", 5],
-  ["apple", 4]
+  ["Aurelia Vega", 30, "Deepends", "Spain", "Madrid"],
+  ["Guerra Cortez", 45, "Insectus", "USA", "San Francisco"],
+  ["Guadalupe House", 26, "Isotronic", "Germany", "Frankfurt am Main"],
+  ["Elisa Gallagher", 31, "Portica", "United Kingdom", "London"]
 ];
 
 const TableEditablePage = props => {

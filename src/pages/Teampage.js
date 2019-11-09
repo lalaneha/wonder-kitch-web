@@ -49,23 +49,13 @@ class CardExample extends Component {
             <MDBCardImage cascade className="img-fluid" src="amjed.jpg" width="500px" height="500px"/>
             <MDBCardBody cascade>
               <MDBCardTitle>
-              <p align="center">Amjed Ayoud</p></MDBCardTitle>
+              <p align="center">Amjed Ayoub</p></MDBCardTitle>
               <MDBCardText>
               <font size="4">Back-end</font></MDBCardText>
               <MDBBtn href="https://www.linkedin.com/in/amjed-ayoub-7597935b/">LinkedIn</MDBBtn>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
-        {/* <MDBCol>
-          <MDBCard wide>
-            <MDBCardImage cascade className="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/People/6-col/img%20%283%29.jpg" />
-            <MDBCardBody cascade>
-              <MDBCardTitle>Wenhou</MDBCardTitle>
-              <MDBCardText> Backend</MDBCardText>
-              <MDBBtn href="#">MDBBtn</MDBBtn>
-            </MDBCardBody>
-          </MDBCard>
-        </MDBCol> */}
       </MDBRow>
       </div>
     )
