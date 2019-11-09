@@ -21,6 +21,7 @@ class Inventory2 extends Component {
       DBItems:[] };
       this.handleDeleteSubmit = this.handleDeleteSubmit.bind(this);
   }
+  
 
    componentDidMount() {
     axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
@@ -42,6 +43,7 @@ class Inventory2 extends Component {
     .catch(err => this.setState({ error: err.message }));
   }
 
+
 handlePictureChange = event =>{
   this.setState({
       file: event.target.files[0],
@@ -49,41 +51,47 @@ handlePictureChange = event =>{
   })
 }
 
-handleUpdateSubmit = (id,event) =>{
-  axios.post("http://localhost:3001/updateItem",{
-    userID: localStorage.getItem("userID"),
-    itemID: this.state.DBItems[id]._id,
-    name:this.state.DBItems[id].name,
-    quantity:this.state.DBItems[id].quantity
-  }
-)
-.then(res => {
-  if (res.status === "error") {
-    throw new Error(res.data.message);
-  }
-  axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
-  .then(res => {
-    if (res.status === "error") {
-      throw new Error(res.data.message);
-    }
-    res.data[0].items.sort((a,b)=>{
-      if (a.name<b.name) {
-        return -1;
+handleUpdateSubmit = (id,event) =>{ 
+ 
+      axios.post("http://localhost:3001/updateItem",{
+        userID: localStorage.getItem("userID"),
+        itemID: this.state.DBItems[id]._id,
+        name:this.state.DBItems[id].name,
+        quantity:this.state.DBItems[id].quantity
       }
-      if (a.name>b.name) {
-        return 1;
+    )
+    .then(res => {
+      if (res.status === "error") {
+        throw new Error(res.data.message);
       }
-      return 0;
+      axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
+      .then(res => {
+        if (res.status === "error") {
+          throw new Error(res.data.message);
+        }
+        res.data[0].items.sort((a,b)=>{
+          if (a.name<b.name) {
+            return -1;
+          }
+          if (a.name>b.name) {
+            return 1;
+          }
+          return 0;
+        })
+        this.setState({DBItems:res.data[0].items})
+        let arr =[];
+        
+        this.setState({receiptResults:arr})
+      })
+      .catch(err => this.setState({ error: err.message }));
     })
-    this.setState({DBItems:res.data[0].items})
-    let arr =[];
+    .catch(err => this.setState({ error: err.message }));
     
-    this.setState({receiptResults:arr})
-  })
-  .catch(err => this.setState({ error: err.message }));
-})
-.catch(err => this.setState({ error: err.message }));
+ 
+ 
 }
+
+
 
 handleDeleteSubmit = (id,event) =>{
   axios.post("http://localhost:3001/deleteItem",{
