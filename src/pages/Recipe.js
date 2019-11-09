@@ -17,6 +17,8 @@ class Recipe extends Component {
             ingredients: [],
             analyzedInstructions: [],
             nutrients: [],
+            recipeTitle:"",
+            recipeImage:"",
             info:false
         }
 
@@ -119,11 +121,12 @@ viewInfo = id => {
 
     this.setState({ingred:ing})
     this.setState({nutrent:nut})
+    this.setState({recipeTitle:res.data.title})
+    this.setState({recipeImage:res.data.image})
     this.setState({ ingredients: res.data.extendedIngredients, error: "" });
     this.setState({ analyzedInstructions: res.data.analyzedInstructions[0].steps, error: "" });
     this.setState({ nutrients: res.data.nutrition.nutrients, error: "" });
     this.setState({info:true})
-    console.log(this.state.info)
   })
   .catch(err => this.setState({ error: err.message }));
 }
@@ -161,7 +164,7 @@ handleHideInfo = event => {
               <button
               onClick={() => this.handleFormView(i)}
               >
-              <a class="btn btn-primary btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
+              <a class="btn btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
               </button>
                       
                   </ListItem>
@@ -183,7 +186,7 @@ handleHideInfo = event => {
               <button
               onClick={() => this.handleFormView2(i)}
               >
-              <a class="btn btn-primary btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
+              <a class="btn btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
               </button>
                     <FormBtn
                       onClick={this.handleCookSubmit.bind(this,i)}
@@ -209,6 +212,12 @@ handleHideInfo = event => {
                         {this.state.missedIng}
                       </strong>
                   </ListItem>):null} */}
+                  <ListItem key={"img"}>     
+                      <img alt="recipe" src= {this.state.recipeImage}  height="75px" width="75px"></img>
+                    <strong>
+                        {this.state.recipeTitle}
+                    </strong>
+                  </ListItem>
                   <ListItem key={"ing"}>
                     <List>
                     <strong>
