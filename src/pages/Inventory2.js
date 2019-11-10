@@ -9,6 +9,9 @@ import { List, ListItem } from "../components/List";
 import axios from "axios";
 // import Numberinput from "../components/Numberinput";
 import { MDBInput } from 'mdbreact';
+import FoodList from "../components/FoodList";
+import {useLocation} from "react-router-dom"
+import RecipeInventory from "../components/RecipeInventory"
 
 class Inventory2 extends Component {
   constructor(props) {
@@ -240,8 +243,10 @@ handlePictureSubmit=event=>{
             .catch(err => this.setState({ error: err.message }));
 
         }
+      
 
         render() {
+          let query = new URLSearchParams(window.location.search);
           return (
             <div className="searchcontainer">
       <Container style={{ minHeight: "80%" }}>
@@ -261,49 +266,15 @@ handlePictureSubmit=event=>{
               </FormBtn>
         </form>
         <div>
-    {this.state.receiptResults.length ? (
-      <div>
-              <List>
-                {this.state.receiptResults.map((result, i)=> (
-                  <ListItem key={i}>
-                      <DeleteBtn onClick={this.handleReceiptDeleteSubmit.bind(this,i)} >Delete</DeleteBtn>     
-                      <img alt="recipe" src= {result.image}  height="75px" width="75px"></img>
-                      <Row>
-                    <Col size="md-9">
-                      <strong>
-                        Item:
-                      </strong>
-                        <Input
-                        value={result.annotation||""}
-                        onChange={this.handleReceiptItemsChange.bind(this,i)}
-                        name="annotation"
-                        placeholder="item name"/>
-                        </Col>
-                        <Col size="md-3">
-                      <strong>
-                        Quantity:
-                        </strong>
-                        <MDBInput id="qtybutton"
-                        value={result.tag||""}
-                        onChange={this.handleReceiptItemsChange.bind(this,i)}
-                        name="tag"
-                        type="number" />
-                        </Col>
-                        </Row>
-                     
-                  </ListItem>
-                ))}
-              </List>
-               <button
-               onClick={this.handleAddItemsSubmit}
-             >
-                 Add items
-             </button>
-             </div>
-            ) : (
-              <h4>Upload your receipt to Display</h4>
-            )}
-    </div>
+          <FoodList
+            groceryResults={this.state.receiptResults}
+            handleReceiptDeleteSubmit={this.handleReceiptDeleteSubmit}
+            handleReceiptItemsChange={this.handleReceiptItemsChange}
+            handleAddItemsSubmit={this.handleAddItemsSubmit}
+          />
+        </div>
+
+        {query.get("recipeId") ? (<RecipeInventory recipeId={query.get("recipeId")}/>) : (<br />)}
     </Col>
     <Col size="md-6">
     <strong>

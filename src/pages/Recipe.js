@@ -161,12 +161,15 @@ handleHideInfo = event => {
                     <strong>
                         {result.date}
                     </strong>
-              <button
-              onClick={() => this.handleFormView(i)}
-              >
-              <a class="btn btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
-              </button>
-                      
+                    <button
+                      onClick={() => this.handleFormView(i)}
+                    >
+                      <a class="btn btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
+                    </button>
+                    &nbsp; &nbsp;
+                    <button>
+                      <a class="btn btn-xl js-scroll-trigger" href={"/inventory?recipeId="+ result.recipeId}>Update Inventory</a>
+                    </button>   
                   </ListItem>
                 ))}
               </List>
@@ -235,7 +238,7 @@ handleHideInfo = event => {
                       </strong> */}
                   </ListItem>
                   <strong>
-                    Analyzed Steps:
+                    Directions:
                   </strong>
                 {this.state.analyzedInstructions.map(result => (
                   <ListItem key={result.number}>

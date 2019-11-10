@@ -38,7 +38,7 @@ function PrivateRoute({ children, ...rest }) {
 }
 
 
-function App() {
+function App(props) {
   return (
     <Router>
       <div>
