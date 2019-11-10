@@ -5,6 +5,7 @@ import Inventory2 from "./pages/Inventory2";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
+import Recipe from "./pages/Recipe";
 import Teampage from "./pages/Teampage";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
@@ -60,6 +61,9 @@ function App() {
           </PrivateRoute>
           <PrivateRoute exact path="/search">
             <Search />
+          </PrivateRoute>
+          <PrivateRoute exact path="/recipe">
+            <Recipe />
           </PrivateRoute>
         </Wrapper>
         <Footer />

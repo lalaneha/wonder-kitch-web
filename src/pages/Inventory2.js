@@ -7,6 +7,8 @@ import API from "../utils/API";
 import { Input, FormBtn } from "../components/Form";
 import { List, ListItem } from "../components/List";
 import axios from "axios";
+// import Numberinput from "../components/Numberinput";
+import { MDBInput } from 'mdbreact';
 
 class Inventory2 extends Component {
   constructor(props) {
@@ -21,6 +23,7 @@ class Inventory2 extends Component {
       DBItems:[] };
       this.handleDeleteSubmit = this.handleDeleteSubmit.bind(this);
   }
+  
 
    componentDidMount() {
     axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
@@ -42,6 +45,7 @@ class Inventory2 extends Component {
     .catch(err => this.setState({ error: err.message }));
   }
 
+
 handlePictureChange = event =>{
   this.setState({
       file: event.target.files[0],
@@ -49,41 +53,47 @@ handlePictureChange = event =>{
   })
 }
 
-handleUpdateSubmit = (id,event) =>{
-  axios.post("http://localhost:3001/updateItem",{
-    userID: localStorage.getItem("userID"),
-    itemID: this.state.DBItems[id]._id,
-    name:this.state.DBItems[id].name,
-    quantity:this.state.DBItems[id].quantity
-  }
-)
-.then(res => {
-  if (res.status === "error") {
-    throw new Error(res.data.message);
-  }
-  axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
-  .then(res => {
-    if (res.status === "error") {
-      throw new Error(res.data.message);
-    }
-    res.data[0].items.sort((a,b)=>{
-      if (a.name<b.name) {
-        return -1;
+handleUpdateSubmit = (id,event) =>{ 
+ 
+      axios.post("http://localhost:3001/updateItem",{
+        userID: localStorage.getItem("userID"),
+        itemID: this.state.DBItems[id]._id,
+        name:this.state.DBItems[id].name,
+        quantity:this.state.DBItems[id].quantity
       }
-      if (a.name>b.name) {
-        return 1;
+    )
+    .then(res => {
+      if (res.status === "error") {
+        throw new Error(res.data.message);
       }
-      return 0;
+      axios.get("http://localhost:3001/AllItems/" +localStorage.getItem("userID"))
+      .then(res => {
+        if (res.status === "error") {
+          throw new Error(res.data.message);
+        }
+        res.data[0].items.sort((a,b)=>{
+          if (a.name<b.name) {
+            return -1;
+          }
+          if (a.name>b.name) {
+            return 1;
+          }
+          return 0;
+        })
+        this.setState({DBItems:res.data[0].items})
+        let arr =[];
+        
+        this.setState({receiptResults:arr})
+      })
+      .catch(err => this.setState({ error: err.message }));
     })
-    this.setState({DBItems:res.data[0].items})
-    let arr =[];
+    .catch(err => this.setState({ error: err.message }));
     
-    this.setState({receiptResults:arr})
-  })
-  .catch(err => this.setState({ error: err.message }));
-})
-.catch(err => this.setState({ error: err.message }));
+ 
+ 
 }
+
+
 
 handleDeleteSubmit = (id,event) =>{
   axios.post("http://localhost:3001/deleteItem",{
@@ -173,7 +183,7 @@ handlePictureSubmit=event=>{
     API.takePicture(this.state.file) 
     .then(res => {
       for (let i = 0; i < res.data.annotations.length; i++) {
-        res.data.annotations[i].tag="";        
+        res.data.annotations[i].tag=1;        
       }
       res.data.annotations.sort((a,b)=>{
         if (a.annotation<b.annotation) {
@@ -258,20 +268,29 @@ handlePictureSubmit=event=>{
                   <ListItem key={i}>
                       <DeleteBtn onClick={this.handleReceiptDeleteSubmit.bind(this,i)} >Delete</DeleteBtn>     
                       <img alt="recipe" src= {result.image}  height="75px" width="75px"></img>
-                  
-                      <Input
-                        value={result.annotation||""}
-                          onChange={this.handleReceiptItemsChange.bind(this,i)}
-                          name="annotation"
-                          />
-                      <p>
-                        Quantity:
-                        </p>
+                      <Row>
+                    <Col size="md-9">
+                      <strong>
+                        Item:
+                      </strong>
                         <Input
+                        value={result.annotation||""}
+                        onChange={this.handleReceiptItemsChange.bind(this,i)}
+                        name="annotation"
+                        placeholder="item name"/>
+                        </Col>
+                        <Col size="md-3">
+                      <strong>
+                        Quantity:
+                        </strong>
+                        <MDBInput id="qtybutton"
                         value={result.tag||""}
                         onChange={this.handleReceiptItemsChange.bind(this,i)}
                         name="tag"
-                        placeholder="quantity in numbers"/>
+                        type="number" />
+                        </Col>
+                        </Row>
+                     
                   </ListItem>
                 ))}
               </List>
@@ -286,7 +305,7 @@ handlePictureSubmit=event=>{
             )}
     </div>
     </Col>
-    <Col size="md-6" >
+    <Col size="md-6">
     <strong>
     Item:
     </strong>
@@ -310,14 +329,16 @@ handlePictureSubmit=event=>{
               >
                 Add item
               </FormBtn>
-              <div>
+      <div>
+  
             
     {this.state.DBItems.length ? (
               <List>
                 {this.state.DBItems.map((result,i) => (
 
                   <ListItem key={result._id} >
-                    
+                    <Row>
+                    <Col size="md-9">
                       <strong>
                         Item:
                       </strong>
@@ -326,14 +347,18 @@ handlePictureSubmit=event=>{
                         onChange={this.handlDBItemsChange.bind(this,i)}
                         name="name"
                         placeholder="item name"/>
+                        </Col>
+                        <Col size="md-3">
                       <strong>
                         Quantity:
                         </strong>
-                        <Input
+                        <MDBInput id="qtybutton"
                         value={result.quantity||""}
                         onChange={this.handlDBItemsChange.bind(this,i)}
                         name="quantity"
-                        placeholder="quantity in numbers"/>
+                        type="number" />
+                        </Col>
+                        </Row>
                       <FormBtn
                       onClick={this.handleUpdateSubmit.bind(this,i)}
                       >

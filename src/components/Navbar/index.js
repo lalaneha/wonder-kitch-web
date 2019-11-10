@@ -37,6 +37,14 @@ function Navbar() {
           </li>
           <li className="nav-item">
             <Link
+              to="/recipe"
+              className={window.location.pathname === "/recipe" ? "nav-link active" : "nav-link"}
+            >
+              SavedRecipes
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
               to="/logout"
               className={window.location.pathname === "/logout" ? "nav-link active" : "nav-link"}
             >

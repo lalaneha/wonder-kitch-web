@@ -1,68 +1,59 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Welcome to WonderKitch 
 
-## Available Scripts
+Overview:
+WonderKitch is a Website designed to make meal planning efficient, easy and waste free. Users can view recipes that they can make based on foods that they already have in their fridge. 
 
-In the project directory, you can run:
+# Technologies Used:
+ * APIs:
+    * Spoonacular 
+    * Taggun
+    
+* Programming Language:
+    * Javascript
 
-### `npm start`
+* Libraries Used
+    * React
+    * Node 
+    * JSON
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* NPM Depndencies within Node
+    * .gitignore
+    * dotenv
+    * axios
+    * fs
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+# Instructions:
+Wonderkitch is mobile friendly and easy to use! It does require user authentication, so users will need to make an account when they first enter the site. 
 
-### `npm test`
+* 1)Users enter the homepage and can either login or create an account.
+Login
+![](public/)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Create Account
+![](public/)
 
-### `npm run build`
+They can also click on the "learn more about us" link to view the information about the team that built this site
+![](public/)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+* 2)Once they are logged into WonderKitch they are directed to "view/update inventory" or "recipe search" 
+![](public/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* 3)View/Update inventory will lead them to a page where they can scan or upload their grocery receipt or manually upload items. The receipt scan feature will scan any grocery reciept and pull only the food items.
 
-### `npm run eject`
+Blank page view
+![](public/) 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Scan reciept 
+![](public/)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* 4)The Search page allows users to ask any nutrition related question, get a recipe based on key ingredients or simply view recipes based on ingredients that they have in their inventory. 
+![](public/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* 5) There is also the option to view saved recipes. Users can click this in the navbar and view recipes that they have previously saved. They can view or delete these recipes. 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+* 6) Finally users can click the logOut button to log out of their account. This will lead the to the logOut page that displays  both a nutition fact and a joke.
+![](public/)
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Link to deployed site:
+(https://wonderktich.herokuapp.com) 

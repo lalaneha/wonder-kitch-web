@@ -155,3 +155,20 @@ p {
 .searchcontainer{
   min-height: 100vh;
 }
+
+a:hover{ 
+  color: rgb(19, 61, 19); 
+}
+
+a:not([href]):not([tabindex]) {
+  color: #25712A;
+    text-decoration: none;
+}
+
+.btn:not(:disabled):not(.disabled) {
+  color: #25712A;
+  cursor: pointer;
+}
+/* #qtybutton{
+  font-size:30px;
+} */
