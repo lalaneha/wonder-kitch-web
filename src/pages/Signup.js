@@ -2,6 +2,7 @@ import React, { Component }  from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import axios from "axios";
 // import fakeAuth from '../utils/fakeAuth';
+import Alert from "../components/Alert"
 
 
 class FormPage extends Component {
@@ -31,8 +32,6 @@ class FormPage extends Component {
       if (res.status === "error") {
         throw new Error(res.data.message);
       }
-      console.log("signup")
-      console.log(res)
       // Tell the UI we've authenticated.
       localStorage.setItem("userID", res.data._id)
       // React redirect to /home route.
@@ -51,12 +50,21 @@ class FormPage extends Component {
 
   render() {
   return (
+
     <div className="signups">  
     <MDBContainer>
       <MDBRow>
       <MDBCol md="3" sm="0"></MDBCol>
         <MDBCol md="6" sm="10" className="logincc">
         <form onSubmit={this.handleFormSubmit}>
+        
+            <Alert
+            type="danger"
+            style={{ opacity: this.state.error ? 1 : 0, marginBottom: 10 }}
+             >
+            {this.state.error}
+          </Alert>
+
             <p className="top text-center mb-4">Sign up</p>
             <label htmlFor="defaultFormRegisterNameEx" className="grey-text">
             </label>
@@ -122,3 +130,4 @@ class FormPage extends Component {
 };
 
 export default FormPage;
+

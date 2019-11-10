@@ -302,7 +302,7 @@ class Search extends Component {
                       </strong> */}
                   </ListItem>
                   <strong>
-                    Analyzed Steps:
+                    Directions:
                   </strong>
                 {this.state.analyzedInstructions.map(result => (
                   <ListItem key={result.number}>
