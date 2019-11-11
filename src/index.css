@@ -169,6 +169,14 @@ a:not([href]):not([tabindex]) {
   color: #25712A;
   cursor: pointer;
 }
-/* #qtybutton{
-  font-size:30px;
-} */
+
+@media screen and (max-width: 600px) {
+  .wenhao{
+    width: 172.5px;
+    height: 332.5px;
+  }
+}
+
+.teammembers{
+  background:radial-gradient(rgb(204, 196, 196), rgb(160, 194, 160), rgb(144, 144, 192))
+}
