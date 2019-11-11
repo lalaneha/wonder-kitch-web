@@ -20,7 +20,16 @@ class RecipeInventory extends Component {
     componentDidMount() {
         axios.get('/recipeNutrition/' + this.props.recipeId)
         .then(res => {
-            this.setState({recipeIngredients: res.data.extendedIngredients})
+            var recipeIngList = []
+            res.data.extendedIngredients.forEach(element => {
+                recipeIngList.push({
+                    annotation: element.name,
+                    image: element.image,
+                    tag: element.amount
+                })
+            });
+            this.setState({recipeIngredients: recipeIngList})
+            // this.setState({recipeIngredients: res.data.extendedIngredients})
         })
     }
         

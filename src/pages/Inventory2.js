@@ -251,30 +251,31 @@ handlePictureSubmit=event=>{
             <div className="searchcontainer">
       <Container style={{ minHeight: "80%" }}>
       <Row>
-          <Col size="md-6">
-        <form>
-        <Input
-                onChange={this.handlePictureChange}
-                type="file"
-                encType="multipart/form-data"
-                name="file"
-              />
-              <FormBtn
-                onClick={this.handlePictureSubmit}
-              >
-                  Upload Picture
-              </FormBtn>
-        </form>
-        <div>
-          <FoodList
-            groceryResults={this.state.receiptResults}
-            handleReceiptDeleteSubmit={this.handleReceiptDeleteSubmit}
-            handleReceiptItemsChange={this.handleReceiptItemsChange}
-            handleAddItemsSubmit={this.handleAddItemsSubmit}
-          />
-        </div>
-
-        {query.get("recipeId") ? (<RecipeInventory recipeId={query.get("recipeId")}/>) : (<br />)}
+        <Col size="md-6">
+        {query.get("recipeId") ? (<RecipeInventory recipeId={query.get("recipeId")}/>) : (
+        <div id="receiptUpload">
+          <form>
+            <Input
+              onChange={this.handlePictureChange}
+              type="file"
+              encType="multipart/form-data"
+              name="file"
+            />
+            <FormBtn
+              onClick={this.handlePictureSubmit}
+            >
+              Upload Picture
+            </FormBtn>
+          </form>
+          <div>
+            <FoodList
+              groceryResults={this.state.receiptResults}
+              handleReceiptDeleteSubmit={this.handleReceiptDeleteSubmit}
+              handleReceiptItemsChange={this.handleReceiptItemsChange}
+              handleAddItemsSubmit={this.handleAddItemsSubmit}
+            />
+          </div>
+        </div>)}
     </Col>
     <Col size="md-6">
     <strong>
