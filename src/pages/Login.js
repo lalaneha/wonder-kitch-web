@@ -26,11 +26,8 @@ class Login extends Component {
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
-    console.log("test")
-
     axios.post("http://localhost:3000/login", {logemail: this.state.logemail,  logpassword: this.state.logpassword})
       .then(res => {
-        console.log("look here", res.data)
         // This tells the UI we've authenticated. See fakeAuth.js
         localStorage.setItem("userID", res.data._id)
         if (res.status === "error") {
