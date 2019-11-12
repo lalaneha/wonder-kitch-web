@@ -32,6 +32,18 @@ import { Link } from "react-router-dom";
             </Card.Text>
           </Card.Body>
           </Card>
+          <Card className="inv2">
+        <Card.Body>
+        <Card.Text>
+        <Link
+              to="/recipe"
+              className={window.location.pathname === "/recipe"}
+            >
+            <h2 className="ourteam">View Saved Recipes</h2>
+          </Link>
+          </Card.Text>
+          </Card.Body>
+          </Card>
           </div>
           </div>
     );
