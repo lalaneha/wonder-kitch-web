@@ -1,12 +1,13 @@
 import React, { Component} from "react";
 import Container from "../components/Container";
 import axios from 'axios';
-import { Input, FormBtn } from "../components/Form";
+import { FormBtn } from "../components/Form";
 import { List, ListItem } from "../components/List";
 import Col from "../components/Col";
 import Row from "../components/Row";
-import moment  from "moment";
 import DeleteBtn from "../components/DeleteBtn";
+import { MDBInput } from 'mdbreact';
+import Alert, { openAlert } from "../components/InvAlert";
 
 class Recipe extends Component {
         state={
@@ -19,7 +20,11 @@ class Recipe extends Component {
             nutrients: [],
             recipeTitle:"",
             recipeImage:"",
-            info:false
+            serving:"",
+            cookId:"",
+            cookIngredients:[],
+            info:false,
+            cookInfo:false
         }
 
         componentDidMount() {
@@ -42,6 +47,7 @@ class Recipe extends Component {
                   }
                   
               }
+              this.setState({serving:res.data[0].servingSize})
               this.setState({recipes:r})
               this.setState({cookedRecipes:cr})
             })
@@ -79,9 +85,29 @@ handleDeleteSubmit2=(id,event) =>{
 }
 
 handleCookSubmit = (id,event) =>{
+  const recipeID = this.state.recipes[id].recipeId;
+  axios.get("http://localhost:3001/recipeNutrition/" +recipeID)
+  .then(res => {
+    if (res.status === "error") {
+      throw new Error(res.data.message);
+    }
+    this.handleHideInfo();
+    this.setState({ cookIngredients: res.data.extendedIngredients, error: "" });
+    this.setState({recipeTitle:res.data.title})
+    this.setState({recipeImage:res.data.image})
+    this.setState({cookId:res.data.id})
+    this.setState({Info:false})
+    this.setState({cookInfo:true})
+  })
+  .catch(err => this.setState({ error: err.message }));
+}
+
+cook = (id) => {
+  let nowDate= new Date();
   axios.post("http://localhost:3001/cook",{
     userID: localStorage.getItem("userID"),
-    recipeID: this.state.recipes[id]._id
+    recipeID: id,
+    date:nowDate
   }
 )
 .then(res => {
@@ -118,7 +144,7 @@ viewInfo = id => {
     for (let j = 0; j < res.data.nutrition.nutrients.length; j++) {
       nut = nut + res.data.nutrition.nutrients[j].title+" "+res.data.nutrition.nutrients[j].amount+" "+res.data.nutrition.nutrients[j].unit+", "
     }
-
+    let arr =[];
     this.setState({ingred:ing})
     this.setState({nutrent:nut})
     this.setState({recipeTitle:res.data.title})
@@ -126,6 +152,8 @@ viewInfo = id => {
     this.setState({ ingredients: res.data.extendedIngredients, error: "" });
     this.setState({ analyzedInstructions: res.data.analyzedInstructions[0].steps, error: "" });
     this.setState({ nutrients: res.data.nutrition.nutrients, error: "" });
+    this.setState({ cookIngredients: arr});
+    this.setState({cookInfo:false})
     this.setState({info:true})
   })
   .catch(err => this.setState({ error: err.message }));
@@ -136,16 +164,90 @@ handleHideInfo = event => {
   this.setState({analyzedInstructions:arr})
   this.setState({nutrients:arr})
   this.setState({ingredients:arr})
-  // this.setState({missingIngredients:arr})
   this.setState({ingred:"", nutrent:""})
   this.setState({info:false})
+}
+
+handleServingChange = (event) =>{
+  const {name ,value} =event.target;
+  this.setState({ [name]: value });
+}
+
+handleServingSubmit = event => {
+  axios.post("http://localhost:3001/serving",{
+    userID: localStorage.getItem("userID"),
+    serving: this.state.serving
+  }
+)
+.then(res => {
+  if (res.status === "error") {
+    throw new Error(res.data.message);
+  }
+  this.success();
+  this.componentDidMount(); 
+})
+.catch(err => this.setState({ error: err.message }));
+}
+
+success = () => {
+  openAlert({ message: 'You have successfully updated your serving size', type: 'success' });
+
+}
+
+handleCookUpdateChange = (i,event) => {
+  const { name, value } = event.target;
+  let users = [...this.state.cookIngredients];
+  users[i] = {...users[i], [name]: value};
+  this.setState({cookIngredients:users });
+}
+
+handleCookUpdateSubmit = (event) => {
+  console.log(this.state.cookIngredients)
+  for (let i = 0; i < this.state.cookIngredients.length; i++) {
+    axios.post("http://localhost:3001/cookItems",{
+      userID: localStorage.getItem("userID"),
+      name: this.state.cookIngredients[i].name,
+      quantity: this.state.cookIngredients[i].amount
+    }
+  )
+    .then(res => {
+      if (res.status === "error") {
+        throw new Error(res.data.message);
+      }
+      console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
+    }
+    )
+    .catch(err => this.setState({ error: err.message }));
+  }
+  let arr =[];
+  this.setState({cookIngredients:arr})
+  this.setState({cookInfo:false})
+  this.cook(this.state.cookId);
+  this.handleHideInfo();
 }
 
     render() {
         return (
       <div className="searchcontainer"> 
       <Container>
-        <h2 className="text-center">Your saved recipes!</h2>
+        <h2 className="text-center">Your Recipes!</h2>
+        <Row>
+          <Col size="md-8">
+          <strong>
+                        Change your serving size:
+                        </strong>
+                        <MDBInput
+                        value={this.state.serving||""}
+                        onChange={this.handleServingChange.bind(this)}
+                        name="serving"
+                        type="number" />
+                        <FormBtn
+                      onClick={this.handleServingSubmit.bind(this)}
+                      >
+                      Update
+                      </FormBtn>
+          </Col>
+        </Row>
         <Row>
     <Col size="md-8">
     <List>
@@ -161,15 +263,12 @@ handleHideInfo = event => {
                     <strong>
                         {result.date}
                     </strong>
-                    <button
-                      onClick={() => this.handleFormView(i)}
-                    >
-                      <a class="btn btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
-                    </button>
-                    &nbsp; &nbsp;
-                    <button>
-                      <a class="btn btn-xl js-scroll-trigger" href={"/inventory?recipeId="+ result.recipeId}>Update Inventory</a>
-                    </button>   
+              <button
+              onClick={()=>this.handleFormView(i)}
+              >
+              <a class="btn btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
+              </button>
+                      
                   </ListItem>
                 ))}
               </List>
@@ -187,16 +286,15 @@ handleHideInfo = event => {
                         {result.date}
                     </strong>                     
               <button
-              onClick={() => this.handleFormView2(i)}
+              onClick={()=>this.handleFormView2(i)}
               >
               <a class="btn btn-xl js-scroll-trigger" href="#ingredients">View Info</a>
               </button>
-                    <FormBtn
-                      onClick={this.handleCookSubmit.bind(this,i)}
-                      >
-                      Cook
-                      </FormBtn>
-                      
+              <button
+              onClick={this.handleCookSubmit.bind(this,i)}
+              >
+              <a class="btn btn-xl js-scroll-trigger" href="#ingredients">Cook</a>
+              </button>                      
                   </ListItem>
                 ))}
               </List>
@@ -265,6 +363,36 @@ handleHideInfo = event => {
                       Hide Info
                       </button>
               </List>
+              ) : null}
+              {this.state.cookInfo ? (
+                <List>
+                <ListItem key={"img"}>     
+                    <img alt="recipe" src= {this.state.recipeImage}  height="75px" width="75px"></img>
+                  <strong>
+                      {this.state.recipeTitle}
+                  </strong>
+                </ListItem>
+                <strong>
+                  Ingredients:
+                </strong>
+                 {this.state.cookIngredients.map((result,i)=>(
+                   <ListItem key ={i}>
+                     <strong>
+                     {result.name}
+                     </strong>
+                     <MDBInput
+                        value={result.amount||""}
+                        onChange={this.handleCookUpdateChange.bind(this,i)}
+                        name="amount"
+                        type="number" />
+                  </ListItem>
+                 ))}
+                        <FormBtn
+                      onClick={this.handleCookUpdateSubmit.bind(this)}
+                      >
+                      Cook and Update your Inventory
+                      </FormBtn>
+                 </List>
               ) : null}
               </section>
     </Col>

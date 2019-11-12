@@ -49,12 +49,12 @@ class Inventory2 extends Component {
   }
 
 
-handlePictureChange = event =>{
-  this.setState({
-      file: event.target.files[0],
-      loaded: 0
-  })
-}
+  handlePictureChange = event =>{
+    this.setState({
+        file: event.target.files[0],
+        loaded: 0
+    })
+  }
 
 handleUpdateSubmit = (id,event) =>{ 
  
